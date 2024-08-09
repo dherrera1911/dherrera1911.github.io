@@ -1,13 +1,13 @@
 ---
 title: "Assesing the burden of COVID-19 in developing countries: systematic review, meta-analysis and public policy implications"
 collection: publications
-permalink: /publication/2022-05-developing.md
+permalink: /publication/2022-05-developing
 excerpt: 'The infection fatality rate (IFR) of COVID-19 has been carefully measured and analysed in high-income countries, whereas there has been no systematic analysis of age-specific seroprevalence or IFR for developing countries. We systematically reviewed the literature to identify all COVID-19 serology studies in developing countries that were conducted using representative samples collected by February 2021. For each of the antibody assays used in these serology studies, we identified data on assay characteristics, including the extent of seroreversion over time. We analysed the serology data using a Bayesian model that incorporates conventional sampling uncertainty as well as uncertainties about assay sensitivity and specificity. We then calculated IFRs using individual case reports or aggregated public health updates, including age-specific estimates whenever feasible.'
 date: 2022-05-01
 venue: 'BMJ Global Health'
 paperurl: 'https://gh.bmj.com/content/7/5/e008477?fbclid=IwAR2c-UwRtalmCk9zSXV-_2eiUJsCJPc9RTy4nZIWmUn-p104G5zLdGcRo0k'
 citation: '
-Andrew T Levin, Nana Owusu-Boaitey, Sierra Pugh, Bailey K Fosdick, Anthony B Zwi, Anup Malani, Satej Soman, Lonni Besançon, Ilya Kashnitsky, Sachin Ganesh, Aloysius McLaughlin, Gayeong Song, Rine Uhm, Daniel Herrera-Esposito, Gustavo de Los Campos, Ana Carolina Pecanha Peçanha Antonio, Enyew Birru Tadese, Gideon Meyerowitz-Katz (2022). &quot;Assesing the burden of COVID-19 in developing countries: systematic review, meta-analysis and public policy implications.&quot; <i>BMJ Global Health</i>. 7.'
+Andrew T Levin, Nana Owusu-Boaitey, Sierra Pugh, Bailey K Fosdick, Anthony B Zwi, Anup Malani, Satej Soman, Lonni Besançon, Ilya Kashnitsky, Sachin Ganesh, Aloysius McLaughlin, Gayeong Song, Rine Uhm, <strong>Daniel Herrera-Esposito</strong>, Gustavo de Los Campos, Ana Carolina Pecanha Peçanha Antonio, Enyew Birru Tadese, Gideon Meyerowitz-Katz (2022). &quot;Assesing the burden of COVID-19 in developing countries: systematic review, meta-analysis and public policy implications.&quot; <i>BMJ Global Health</i>. 7.'
 ---
 
 This paper featured in a Nature News piece titled 

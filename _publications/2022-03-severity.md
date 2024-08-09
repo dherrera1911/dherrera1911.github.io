@@ -7,7 +7,7 @@ excerpt: 'Knowing the age-specific rates at which individuals infected with SARS
 date: 2022-03-01
 venue: 'BMC Infectious Diseases'
 paperurl: 'https://link.springer.com/article/10.1186/s12879-022-07262-0'
-citation: 'Herrera-Esposito, D.; de los Campos, Gustavo. &quot; Age-specific rate of severe and critical SARS-CoV-2 infections estimated with multi-country seroprevalence studies. &quot; <i>BMC Infectious Diseases</i>. 22,311.'
+citation: '<strong>Herrera-Esposito, D.</strong>; de los Campos, Gustavo. &quot; Age-specific rate of severe and critical SARS-CoV-2 infections estimated with multi-country seroprevalence studies. &quot; <i>BMC Infectious Diseases</i>. 22,311.'
 ---
 
 In this paper we present the first estimates of severe and critical disease stratified by age for

@@ -7,7 +7,7 @@ date: 2023-05-01
 venue: 'Eurosurveillance'
 paperurl: 'https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2023.28.21.2200809'
 citation: 'Nana Owusu-Boaitey, Timothy W Russell, Gideon Meyerowitz-Katz, Andrew T Levin,
-Daniel Herrera-Esposito (2023). &quot; Dynamics of SARS-CoV-2 seroassay sensitivity: a systematic review and modeling study .&quot; <i>Eurosurveillance</i>. 28(21).'
+<strong>Daniel Herrera-Esposito</strong> (2023). &quot; Dynamics of SARS-CoV-2 seroassay sensitivity: a systematic review and modeling study .&quot; <i>Eurosurveillance</i>. 28(21).'
 ---
 
 In this project, we did a systematic meta-analysis of sensitivity data
