@@ -1,20 +1,21 @@
 ---
 title: "Milestones and Myths of the Brain"
 collection: teaching
-type: "Undergraduate course"
+type: "Undergraduate"
 permalink: /teaching/2022-fall-hym
 venue: "Faculty of Sciences, Universidad de la Republica"
-date: 2022-03-01
+date: 2017-07-01
 location: "Montevideo, Uruguay"
 ---
 
-(2017-onwards) Course for starting biology and biochemistry students
-at Faculty of Sciences, UdelaR, Uruguay.
-I teach a lecture and discussion group on perception science.
-
+**2017-2024.** I teach a lecture and a discussion class about
+perception science to first and second year biology students.
 A [book by the same name](https://pmb.parlamento.gub.uy/pmb/opac_css/index.php?lvl=notice_display&id=102927)
 was published by the course coordinators for use in the course
-and aimed at a broader audience. I taught a lecture titled
+and aimed at a broader audience, for which I wrote a
+chapter titled [*Is the world as we see it?*](/files/teaching/hym/capitulo_hym_dh.pdf).
+
+I taught a lecture titled
 *Is the world as we see it?*, discussing broad concepts in
 perception science and neuroscience through the guiding
 question of whether our perception of the world is a

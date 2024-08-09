@@ -1,17 +1,17 @@
 ---
 title: "Molecular and cellular neuroscience"
 collection: teaching
-type: "Undergraduate course"
+type: "Undergraduate"
 permalink: /teaching/2022-fall-neuro1
 venue: "Faculty of Sciences, Universidad de la Republica"
-date: 2022-03-01
+date: 2017-03-01
 location: "Montevideo, Uruguay"
 ---
 
-(2017-2022) Course for advanced biology and biochemistry undergraduate
-students at Faculty of Sciences, UdelaR, Uruguay. I taught lectures
-on molecular and biophysical basis of neuronal electrophysiology,
-a simulation lab, and led discussion groups.
+**2017-2022.** Course for advanced biology and biochemistry
+students. I taught lectures on the molecular and biophysical basis
+of neuronal electrophysiology, led discussion groups, and implemented
+and taught a 3-class neuron biophysics simulation lab.
 
 I designed a three-class neuron biophysics simulation lab using the
 [NEURON simulator](https://www.neuron.yale.edu/neuron/),

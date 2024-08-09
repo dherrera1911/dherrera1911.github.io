@@ -1,17 +1,18 @@
 ---
 title: "Basic Machine Learning for Scientists"
 collection: teaching
-type: "Graduate course"
+type: "Graduate"
 permalink: /teaching/2021-spring-aabc
 venue: "Faculty of Engineering, Universidad de la Republica"
 date: 2021-11-01
 location: "Montevideo, Uruguay"
 ---
 
-(2021 ) 7-week course of machine learning for scientists
-without an engineering background. I was a teaching assistant
-in the first edition, responsible for designing the
-notebooks for the practical classes
+**2021.** I was a teaching assistant in the first edition of a
+7-week course of Machine Learning aimed at scientists and
+graduate students without an engineering background. I was 
+responsible, together with the other TA, for designing the notebooks
+for the practical classes
 ([link to notebooks](https://github.com/dherrera1911/talleres_aabc)),
 and to teach those classes. [Course website](https://eva.fing.edu.uy/course/view.php?id=1529)
 

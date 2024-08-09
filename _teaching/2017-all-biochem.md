@@ -1,21 +1,20 @@
 ---
 title: "Biochemistry for medical students"
 collection: teaching
-type: "Undergraduate course"
+type: "Undergraduate"
 permalink: /teaching/2017-all-biochem
 venue: "Faculty of Medicine, Universidad de la Republica"
-date: 2017-03-01
+date: 2013-03-01
 location: "Montevideo, Uruguay"
 ---
 
-(2013-2017) I was a teacher assistant in 1st and 3rd year
-biochemistry courses for medical students at Faculty of Medicine,
-UdelaR, Uruguay (note, Medicine is not a 4-year graduate degree in Uruguay,
-but a 7-year degree). I led discussion groups on topics ranging
-from basic physical chemistry (e.g. acid-base equilibria) to,
-biochemistry (e.g. enzyme kinetics) to systems physiology
-(e.g. digestion). I also led practical laboratory classes on a
-variety of topics, and was responsible for preparing
-the materials for the practical classes, and to grade
-students lab reports.
+**2013-2016**. I was a teaching assistant in 1st and 3rd year
+biochemistry courses for medical students
+(note: Medical School is 7 years long in Uruguay, with
+years 1 to 3 being equivalent to pre-med undergraduate studies).
+I taught topics ranging from basic physical chemistry
+to, biochemistry, to human physiology.
+I also led and organized practical laboratory classes on a
+variety of topics. I held a teaching position at the
+[Biochemistry Department of the Faculty of Medicine](http://www.bioquimica.fmed.edu.uy/Docencia.html).
 
