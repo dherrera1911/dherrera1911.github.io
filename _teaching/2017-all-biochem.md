@@ -12,9 +12,9 @@ location: "Montevideo, Uruguay"
 biochemistry courses for medical students
 (note: Medical School is 7 years long in Uruguay, with
 years 1 to 3 being equivalent to pre-med undergraduate studies).
-I taught topics ranging from basic physical chemistry
-to, biochemistry, to human physiology.
+I taught topics in physical chemistry, biochemistry and human physiology.
 I also led and organized practical laboratory classes on a
-variety of topics. I held a teaching position at the
+variety of topics. This teaching was done in the context of
+my teaching position at the
 [Biochemistry Department of the Faculty of Medicine](http://www.bioquimica.fmed.edu.uy/Docencia.html).
 

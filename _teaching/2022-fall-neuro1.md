@@ -8,14 +8,13 @@ date: 2017-03-01
 location: "Montevideo, Uruguay"
 ---
 
-**2017-2022.** Course for advanced biology and biochemistry
-students. I taught lectures on the molecular and biophysical basis
-of neuronal electrophysiology, led discussion groups, and implemented
-and taught a 3-class neuron biophysics simulation lab.
-
-I designed a three-class neuron biophysics simulation lab using the
-[NEURON simulator](https://www.neuron.yale.edu/neuron/),
-with exercises to be done.
+**2017-2022.** I taught lectures, led discussion groups, and designed
+and led a 3-class neuron biophysics simulation lab in
+this course for advanced biology and biochemistry students.
+I taught lectures on the biophysical underpinnings
+of neuronal electrophysiology, and led the simulation labs
+using the [NEURON simulator](https://www.neuron.yale.edu/neuron/)
+to explore these biophysical principles.
 
 Some materials I have prepared for this course are:
   * Neuron biophysics simulation lab:

@@ -8,13 +8,12 @@ date: 2021-11-01
 location: "Montevideo, Uruguay"
 ---
 
-**2021.** I was a teaching assistant in the first edition of a
-7-week course of Machine Learning aimed at scientists and
-graduate students without an engineering background. I was 
-responsible, together with the other TA, for designing the notebooks
-for the practical classes
+**2021.** I was a teaching assistant in the first edition of this
+7-week graduate course. I designed and implemented, with the other TA,
+the notebooks for the practical classes
 ([link to notebooks](https://github.com/dherrera1911/talleres_aabc)),
-and to teach those classes. [Course website](https://eva.fing.edu.uy/course/view.php?id=1529)
+that include the course evaluations,
+and we led those classes. [Course website](https://eva.fing.edu.uy/course/view.php?id=1529)
 
 The course covers basic concepts of machine learning, to
 give an overview of the area, while also providing

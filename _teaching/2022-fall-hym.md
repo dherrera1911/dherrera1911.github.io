@@ -9,18 +9,20 @@ location: "Montevideo, Uruguay"
 ---
 
 **2017-2024.** I teach a lecture and a discussion class about
-perception science to first and second year biology students.
-A [book by the same name](https://pmb.parlamento.gub.uy/pmb/opac_css/index.php?lvl=notice_display&id=102927)
-was published by the course coordinators for use in the course
-and aimed at a broader audience, for which I wrote a
-chapter titled [*Is the world as we see it?*](/files/teaching/hym/capitulo_hym_dh.pdf).
+perception science in this course for first and second year biology students.
+I also wrote a chapter for the
+[book by the same name as the course](https://pmb.parlamento.gub.uy/pmb/opac_css/index.php?lvl=notice_display&id=102927),
+published by the course coordinators. The chapter,
+found [here](/files/teaching/hym/capitulo_hym_dh.pdf), is titled
+*Is the world as we see it?* and discusses broad concepts in
+perception and neuroscience, accessible to a general
+educated audience.
 
-I taught a lecture titled
-*Is the world as we see it?*, discussing broad concepts in
+In the lecture I taught, also titled
+*Is the world as we see it?*, we discuss broad concepts in
 perception science and neuroscience through the guiding
 question of whether our perception of the world is a
-faithful representation of reality, and wrote a chapter
-for the book on the same topic. Concepts of the class
+faithful representation of reality. Concepts of the class
 are then discussed around optical illusions in a
 discussion group.
 

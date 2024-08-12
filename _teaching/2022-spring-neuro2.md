@@ -8,10 +8,11 @@ date: 2017-07-01
 location: "Montevideo, Uruguay"
 ---
 
-**2017-2022.** Course for advanced biology and biochemistry undergraduate
-students at Faculty of Sciences, UdelaR, Uruguay. I taught lectures
-on the Cerebellum, Basal Ganglia, Visceral motor control, Memory and
-Learning, and on Information Theory and Neural Coding, and
+**2017-2022.** I taught several lectures and a psychophysics
+tutorial in this course for advanced biology and biochemistry students.
+I taught the course lectures on the Cerebellum, Basal Ganglia,
+Visceral motor control, Memory and
+Learning, Information Theory and Neural Coding, and
 a tutorial on psychophysical data analysis.
 
 Some materials I have prepared for this course are:

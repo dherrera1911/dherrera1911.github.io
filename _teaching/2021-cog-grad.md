@@ -8,9 +8,9 @@ date: 2021-07-01
 location: "Montevideo, Uruguay"
 ---
 
-**2021.** I was invited to teach a tutorial on dynamical systems
-for the maters course "Mathematical methods for Cognitive Science".
+**2021.** I taught an invited lecture on dynamical systems modeling
+for the masters course "Mathematical methods for Cognitive Science".
 I used modeling of epidemic dynamics as an example, and
-used a Jupyter notebook to teach the class.
+designed and implemented a Jupyter notebook to teach the class.
 ([Link to Jupyter notebook](/files/teaching/other_lectures/epidemias_ecuaciones_diferenciales.ipynb)).
 
