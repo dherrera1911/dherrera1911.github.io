@@ -12,5 +12,5 @@ location: "Montevideo, Uruguay"
 for the masters course "Mathematical methods for Cognitive Science".
 I used modeling of epidemic dynamics as an example, and
 designed and implemented a Jupyter notebook to teach the class.
-([Link to Jupyter notebook](/files/teaching/other_lectures/epidemias_ecuaciones_diferenciales.ipynb)).
+([Link to Jupyter notebook](https://nbviewer.org/github/dherrera1911/dherrera1911.github.io/blob/master/files/teaching/other_lectures/epidemias_ecuaciones_diferenciales.ipynb)).
 
