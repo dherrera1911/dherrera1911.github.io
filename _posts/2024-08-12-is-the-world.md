@@ -9,101 +9,113 @@ tags:
   - General audience
 ---
 
-Translation by the author of the chapter *Es el mundo como lo vemos?*
-([link](/files/teaching/hym/capitulo_hym_dh.pdf) to the original in Spanish)
+Author translation of the chapter "Es el mundo como lo vemos?"
+([link to pdf](/files/teaching/hym/capitulo_hym_dh.pdf) in Spanish)
 for the book
-[*Hitos y Mitos del Cerebro*](/home/dherresp-adm/Docencia/Hitos_mitos/diapositivas_2021/imagenes/cueva_platon.jpeg), edited
+["Hitos y Mitos del Cerebro"](/home/dherresp-adm/Docencia/Hitos_mitos/diapositivas_2021/imagenes/cueva_platon.jpeg), edited
 for the homonymous first year course at
 Universidad de la República, Uruguay. The chapter aims
 to introduce several ideas of perception and neuroscience to
 first year students through the guiding question of whether the
-world is as we see it.
+world is as we see it. In particular, the chapter discusses
+the question from three perspectives: an evolutionary perspective,
+a resource optimization perspective, and the perspective of
+ambiguity of sensory information.
 
 Introduction
 ------
 
 Approximately 2,400 years ago, Plato’s Republic was published
-in ancient Greece, containing his famous allegory of the cave. This
+in ancient Greece, containing his famous allegory of the
+cave (**Figure 1**). This
 allegory describes a group of people living inside a dark cave, where
 the only visible things are the shadows projected from the entrance of the
 cave onto one of its walls. Since they cannot see anything else,
 these people think that the world is made up of shadows and
 cannot conceive the world as we perceive it. This allegory makes us
 question the possibility that we might be in a situation similar to these
-people and that our perception presents us with a distorted world. Thus, Plato raises the central question of this chapter: is the world
+people, and that our perception presents us with a distorted world.
+Thus, Plato raises the central question of this chapter: is the world
 as we see it? Despite its long history, philosophy has not
 abandoned this question, which, with its variants and other colorful examples
-like Descartes' demon from 1641, has been one of the main
-guiding questions in the history of philosophy.
+like Descartes' demon from 1641, or Putnam's brains in vats has
+been one of the main guiding questions in the history of philosophy.
 
 
 <figure>
   <img src="/files/blog/hym/cueva_platon.jpeg" alt="Plato" title="Plato" width="50%">
-   <figcaption> Plato's cave allegory </figcaption>
+   <figcaption> <strong>Figure 1:</strong> Plato's cave allegory </figcaption>
 </figure>
 
-Although this question seems simple, it can actually be interpreted and analyzed
-in many different ways. Therefore, to approach answering it, we
+Although this question might seem simple,
+it can be interpreted and analyzed
+in many different ways. Therefore, to answer it, we
 must clarify what we mean by the words "see" and 
-world." For example, if we take "see" as everything
-we can know with our senses and through science, we would be
-asking if there is a "world" that escapes us and that
+"world". For example, if we take "see" as everything
+we can know with our senses and through science, are
+asking whether there is a "world" that escapes us and that
 we cannot know by any method (or if we live in some
-sort of cave from which we cannot escape). This type of analysis
+sort of cave from which we cannot escape). This question
 would fall within the field of philosophy. On the other hand,
 if we take "see" as what we can perceive with our
-senses and "world" as the entire physical world we know,
+senses and "world" as the physical world,
 then we are faced with a question for physics. This question has
 a clear answer: the world is not as we see it.
-We know there are subatomic particles, dark matter, magnetic fields,
-and many other physical entities that escape our sensory organs. In contrast
-to those possible approaches, in this chapter, we will analyze the
-question from a biological and neuroscientific point of view. The version of
-the question we will study can then be posed as follows: is
-what we see with our senses an accurate image of the world at our physical scale?
+There are subatomic particles, dark matter, magnetic fields,
+and many other physical entities that escape our sensory organs.
 
+In contrast to those other approaches, in this chapter,
+we will analyze the question from a biological and neuroscientific
+point of view. The version of the question we will study
+can then be posed as follows: is what we see with our senses
+an accurate image of the world at our physical scale?
 
 What is seeing? Visual system general overview
 ------
 
 Before we begin to analyze what biology says, it is necessary to
-reflect on what it means to see. Our visual system has an
-incredible capacity and complexity, which translates into an excellent ability to see.
-But the ease with which we see makes it difficult for us
+reflect on what it is to *see*. Because our visual system
+provides us with an excellent ability to see so
+effortlessly, it difficult for us
 to appreciate the complexity of the task. To gain intuition about how
-complicated seeing is, we will use a simple system: a robot
+complicated seeing is, let us consider a simple system: a robot
 with vision.
 
 Suppose we have a small robot, and we
-want to make it "see." The first thing we need to
+want to make it *see*. The first thing that we need to
 do is give it a detector that receives light, or the equivalent
 of an eye. This could be simply a digital video camera.
-This camera receives the ambient light and transforms it into a matrix of
-numbers indicating the intensity of light in each region of the scene,
-which constitutes a digital image (in this matrix, each number represents
-a pixel, and its value indicates the intensity of the same,
-as shown in Figure 7.1). But just taking pictures is
-not enough. Seeing involves using them to extract relevant information from the
-world (e.g., what object is in front of me; how far away is it;
-what size is it, etc.). To do this, we must add a computer with a program
-to the robot that processes the number matrices to extract this information.
-It is not difficult to realize the complexity involved in creating a program
-that allows the robot to convert those number matrices into assessments like:
+This camera receives the image of the scene and
+transforms it into a matrix of
+numbers, indicating the intensity of light at each point.
+This matrix of numbers constitutes a digital image,
+where each number represents a pixel (**Figure 2**).
+
+But just taking pictures is not enough.
+Seeing involves extracting relevant information about the world
+from the pictures (e.g., what object is in front of me; how far away is it;
+what size is it, etc.). To do this, we must give the robot
+a computer with a program that extracts this information from
+these matrices of numbers.
+It is not difficult to realize how complex such a program
+needs to be to allow the robot to convert those
+number matrices into assessments like:
 "I have a medium-height marble table two meters in front
 of me." For example, note that the numerical matrix (i.e., the raw image)
 can change radically if we modify the light source, move the robot
 slightly, change the background of the image, or rotate the table.
 The program faces the difficulty
 of giving the same result despite all those "trivial" changes.
-These difficulties can be seen when developing self-driving cars (which
-often use complementary sensors and work only in limited 
-environments) and visual systems for robots that can go beyond basic tasks.
-Science and engineering have not yet solved these problems.
+These difficulties can be seen in how difficult it is
+to develop fully self-driving cars despite the immense
+interest in this technology.
+Science and engineering have not yet solved this problem that
+our brain solves so effortlessly.
 
 
 <figure>
   <img src="/files/blog/hym/imA.png" alt="Foxy" title="Computation vision" width="70%">
-   <figcaption> <strong>Figure 1:</strong> A digital image can be thought of as a matrix of numbers. On the left, we see a black-and-white image and an enlargement of a segment of it. On the right, we see the same image segment, but with numbers between 0 and 100 indicating the intensity value of each pixel. A computer program that "sees" must take that matrix of numbers and extract information from the scene (e.g., that it contains a fox) from it.</figcaption>
+   <figcaption> <strong>Figure 2:</strong> A digital image can be thought of as a matrix of numbers. On the left, we see a black-and-white image and an enlargement of a segment of it. On the right, we see the same image segment, but with numbers between 0 and 100 indicating the intensity value of each pixel. A computer program that "sees" must take that matrix of numbers and extract information from the scene (e.g., that it contains a fox) from it.</figcaption>
 </figure>
 
 What is interesting about the robot example is that our visual system is
@@ -124,10 +136,10 @@ image must be processed to extract the relevant information. In our visual
 system, after initial processing in the retina, the optic nerve transmits
 visual information to the brain, where we have dozens of cortical areas
 dedicated to extracting information about the world. These areas are densely
-interconnected, and their functioning is still not fully understood, but they carry
+interconnected, and their functions are still not fully understood, but they carry
 out the processing that allows us to recognize a face, estimate a
 distance to throw a projectile, or choose the apple we like the
-most from a drawer. This processing occurs subconsciously, and we do
+most from drawer. This processing occurs subconsciously, and we do
 not have access to it, but it is important to remember that
 "seeing" constitutes a complex processing and interpretation of the image by
 the brain.
@@ -146,15 +158,15 @@ Evolutionary Perspective: The Visual System Did Not Evolve to See the World as I
 
 Like the rest of the systems and biological processes that make up our
 organisms, the visual system evolved to contribute to our reproductive success.
-That is, evolution did not necessarily select the visual system that best
-represented the environment, but rather the one that most favored survival and
+That is, evolution did not necessarily select for the visual system that best
+represents the environment, but rather the one that most favored survival and
 reproduction. An example that illustrates this point is our color vision,
 which went through an interesting path to reach its current state.
 
 
 <figure>
   <img src="/files/blog/hym/imB-pre.jpg" alt="Waves" title="Color wavelength" width="50%">
-   <figcaption> <strong>Figure 2:</strong> Color vision corresponds to
+   <figcaption> <strong>Figure 3:</strong> Color vision corresponds to
   the ability to distinguish the wavelength of light. Image 
   taken from
   <a href="https://www.sciencelearn.org.nz/resources/47-colours-of-light">https://www.sciencelearn.org.nz/resources/47-colours-of-light</a>.</figcaption>
@@ -162,50 +174,59 @@ which went through an interesting path to reach its current state.
 
 
 Light is an electromagnetic wave, and like other waves, it is
-characterized in part by its wavelength. Color vision is the ability to
+characterized in part by its wavelength (**Figure 3**).
+Color vision is the ability to
 distinguish the wavelength of the light we perceive. How is this achieved?
 To begin with, a particular photoreceptor has a preference for certain
-wavelengths that can more easily modify its activation (Figure 7.2). But despite this preference, a single photoreceptor does not allow us
-to distinguish between different wavelengths because its activation also depends on the intensity of the light. This means that it can have the same activation
-with a non-preferential but intense light as with a light of
-its preferred wavelength but dim, and thus it does not allow us
-to distinguish between them. On the other hand, two photoreceptors with
-different wavelength preferences do allow us to discriminate between them, since from
-their two activations, we can distinguish the contribution of light intensity and
-its wavelength. Adding more types of photoreceptors can better
-discriminate wavelengths, improving color vision, and can also cover
-more wavelengths by expanding the spectrum of visible colors.
+wavelengths that can more easily modify its activation (**Figure 4**).
+But despite this preference, a single photoreceptor does not allow us
+to distinguish between different wavelengths, because its
+activation also depends on the intensity of the light.
+This means that a given photoreceptor activation
+can represent a high intensity of a non-preferred wavelength,
+or a low intensity of a preferred wavelength.
+On the other hand, two photoreceptors with
+different wavelength preferences do allow us to discriminate between
+wavelengths, letting us separate the contribution
+of light intensity and wavelength. Having more
+photoreceptors with different preferences allows an
+organism to better discriminate wavelengths, improving color vision.
 
 
 <figure>
   <img src="/files/blog/hym/imB.jpg" alt="Waves" title="Photoreceptors" width="70%">
-   <figcaption> <strong>Figure 3:</strong> 
+   <figcaption> <strong>Figure 4:</strong> 
   Humans have three different photoreceptors for color vision, called cones, and each has its preference for different wavelengths. The graph shows the ability of each cone (named blue, green, and red) to absorb different wavelengths (whose color is indicated in the bar below). A single cone does not allow for disambiguation of wavelength because its activation depends on the color of the light and its intensity (e.g., it cannot determine if greater activation is due to a change in light color or a change in its intensity).</figcaption>
 </figure>
 
 
-At one point in history, the subphylum of vertebrates came to accumulate
-four different types of color photoreceptors, allowing a certain color vision capacity.
-But then, mammals, during a period of their evolution when they
-were nocturnal animals, lost two of these photoreceptors, leaving them with
-two photoreceptors (or dichromatic vision). However, later primates acquired a
-new photoreceptor, bringing the total to three (and trichromatic color vision).
-This photoreceptor falls in the middle of our visible spectrum and makes
+At one point in evolution, the subphylum of vertebrates came to
+have four different types of color photoreceptors.
+But then at another point in our evolution,
+mammals lost two of these photoreceptors (this was when we
+were nocturnal, and color vision was not as important for us),
+leaving them with only (or dichromatic vision). At a later point,
+however, primates acquired a new photoreceptor,
+bringing our total to three (or trichromatic color vision).
+This photoreceptor falls in the middle of our visible color
+spectrum, and makes
 it easier to discriminate green from other colors. The main hypothesis about
-what led to acquiring it is that it was particularly favorable for better
-perceiving vegetation, which was an important part of our environment, helping
-us distinguish, for example, fruits that were part of our diet,
-against the green background of trees. These two evolutionary events show
-how evolution can lead to improvements in sensory systems, although these can
-also deteriorate in certain aspects if evolution produces changes due to their
-cost-benefit relationship (see below). In this way, evolution has
-led us to currently perceive fewer colors than many species of birds that
-still maintain their four photoreceptors.
+what led this photoreceptor to be selected is that it
+was particularly favorable for better perceiving vegetation,
+for example, the fruits that were part of our diet against the
+green background of trees.
 
+These two evolutionary events, the loss and re-gain of photoreceptors,
+show how evolution can select for improvements in sensory systems
+representation of the world, but that it can also lead to
+its deterioration. In this way, evolution has
+led us to currently perceive fewer colors than many species
+of birds that still maintain the four original
+vertebrate photoreceptors.
 
 <figure>
   <img src="/files/blog/hym/imB-post.jpg" alt="Waves" title="Color evolution" width="50%">
-   <figcaption> <strong>Figure 4:</strong> Two color photoreceptors
+   <figcaption> <strong>Figure 5:</strong> Two color photoreceptors
   were lost by mammals in evolution, making our color vision worse.
   We humans acquired a new photoreceptor making us thrichromats, as
   opposed to most other mammals. Image by Jen Christiansen, taken
@@ -216,34 +237,41 @@ still maintain their four photoreceptors.
 
 Another interesting example of the relationship
 between evolution and perception is the study of the frog's visual
-system presented in What the Frog's Eye Tells the Frog's Brain by Lettvin
+system presented in the article
+["What the Frog's Eye Tells the Frog's Brain"](https://ieeexplore.ieee.org/stamp/stamp.jsp?arnumber=4065609) by Lettvin
 et al., published in 1959. The experiment
 carried out in this article involves showing visual stimuli to a frog while
-recording the activity of the fibers of its optic nerve (which goes
-from the eye to the brain) to determine what information about the
-scene these fibers transmit to the brain. What is interesting about this
-article is that the authors discuss the results in the context of the
+recording the activity of the fibers of its optic nerve (which take
+the information from the eye to the brain) to determine
+what information about the
+scene these fibers transmit to the brain. One interesting
+thing about this article is that the authors discuss the
+results in the context of the
 natural behavior of the specimen, which uses vision to hunt and escape
 predators. For example, the frog's visual behavior has the
 peculiarity that it seems not to perceive the static elements of the world
 around it (e.g., food does not catch its attention
-if it does not move). Moreover, its predatory behavior is mainly
+if it does not move, [see video](https://www.youtube.com/watch?v=boytEUqImMI&t=25s)).
+Moreover, its predatory behavior is mainly
 guided by the movement and size of visual objects: it will try
 to capture any small object that moves like an insect, even if
-it looks very different to our visual system. The authors discuss that
-this behavior seems to fit very well with their findings on fiber activation.
+it looks very different from an insect to us.
 
-In this study, four types of fibers in the optic
-nerve are described, each informing about certain specific visual patterns in the
-environment. That is, the brain receives already pre-processed information
-in which a part of the information (the corresponding specific patterns)
-was selected, and another part was discarded. This may explain why
-the frog's visual behavior is so limited: its brain only
-receives some specific patterns of the environment and not others (e.g.,
-the static elements of the scene). For example, one
-of the types of fibers described by the authors is activated when a
-small light pattern that stops and moves intermittently appears in the part of
-the visual field it represents. The frog will then be able to
+The authors discuss that this behavior fits
+very well with their findings on fiber activation.
+They describe four types of fibers in the optic
+nerve, each reporting about very specific visual patterns in the
+environment. For example, one of the types of fibers described
+by the authors is activated when a
+small shadow stops at a specific point in the visual field
+and moves intermittently.
+This type of fiber seems to correspond to the behavior of the
+frog described above, responding to the movement of small objects
+that move like insects. Therefore, the brain receives
+highly pre-processed information 
+where a large part of the visual world detail is discarded,
+which may help explain why the frog's visual behavior is
+so limited. The frog will then be able to
 detect this type of visual event, but not others for which it
 does not have fibers.
 
@@ -266,18 +294,37 @@ extent do we suffer from limitations as great as those of the frog?
 In a certain way, our visual system carries out a similar
 process: the visual stimulus is already processed even in the retina,
 and in each visual area of the cerebral cortex, specific stimulus patterns
-are extracted and passed on to higher areas. However, there are
+are extracted and passed on to higher areas, and those were
+selected because of their contribution to our reproductive
+success. In this process, information about the world is
+also lost. For example, if we look at two different
+images of white noise (the static present in old televisions,
+**Figure 6**),
+these images are very different considered pixel by pixel, but
+they look identical to our visual system, which discards
+a lot of this information.
+
+<figure>
+  <img src="/files/blog/hym/noise1.png" alt="Noise" title="Noise" width="50%">
+   <figcaption> <strong>Figure 6:</strong> Two different
+    white noise images, that although they are very different pixel-by-pixel,
+    look identical to our visual system.</figcaption>
+</figure>
+
+
+However, there are
 reasons to think that our visual system is not as affected as that
 of the frog. For example, the patterns detected in the early
 stages of our visual system (point-like structures in the retina;
 stripe-like structures in the primary visual cortex) are the
 same as those reached by mathematical tools that seek the best method of
 representing images. This suggests that perhaps we are capturing a large part
-of the information available in images. This observation also aligns with a
-conceptual argument, supported, for example, by the philosopher Daniel
-Dennett: higher mammals have very complex and adaptable behavior, which
-requires a faithful representation of the world to solve the problems
-that we frequently encounter. Thus, it could be expected that
+of the information available in images.
+This observation also aligns with the argument that
+flexible goals and behavior such as that in higher mammals
+requires faithful representation of the world (e.g. see
+a technical analysis [here](https://onlinelibrary.wiley.com/doi/full/10.1111/cogs.13195)).
+Thus, it could be expected that
 evolution has led us to see the world approximately as it is.
 
 In summary, our visual system has been shaped by evolution
@@ -295,9 +342,9 @@ Perspective on the Cost of Representation: Representing the World Faithfully Is 
 Our brain is finite and has limited resources. Capturing and processing visual
 stimuli is costly, so our ability to perceive the world faithfully is
 also limited. However, evolution tends to lead to the efficient use
-of resources, and it happens that our visual system manages them optimally,
-allowing us to perceive correctly what is relevant to us. An
-important and illustrative aspect of resource use by our visual system is the
+of resources, and it happens that our visual system manages them
+in very efficient ways, allowing us to perceive correctly what is relevant to us.
+An important and illustrative aspect of resource use by our visual system is the
 separation between central and peripheral vision, which we describe below.
 
 It is evident that vision plays a fundamental role in our cognition,
@@ -316,7 +363,7 @@ perform some tasks (like reading) with peripheral vision.
 
 <figure>
   <img src="/files/blog/hym/imC.png" alt="fovea" title="Fovea" width="50%">
-   <figcaption> <strong>Figure 5:</strong> 
+   <figcaption> <strong>Figure 7:</strong> 
   The resources of the visual system are not distributed homogeneously across our entire visual field. The image shows a map between the visual field (on the left) and the primary visual cortex (on the right). We see that nearly half of the primary visual cortex is dedicated to processing a small fraction of the visual field called the fovea.
   </figcaption>
 </figure>
@@ -327,15 +374,15 @@ don't usually question it, but why do we see with
 little clarity in the periphery?; would it be possible to have the
 high resolution of central vision across the entire visual field? A key
 to understanding this is that although our central vision occupies a small fraction
-of the visual field (we can roughly define it as the area
-covered by our closed fist with an extended arm; Figure 7.3), it
+of the visual field (we can roughly define it as the visual area
+covered by our closed fist with an extended arm; **Figure 7**), it
 uses approximately half of the resources of our visual system.
 Thus, although peripheral vision occupies the majority of the visual field,
 it uses only the other half of the cortical resources. If
 we extrapolate the relationship between visual field and cortical area from central
 vision, processing our entire visual field with the sharpness of central vision would
-require a much larger brain than we have, which would seem to
-be almost a biological impossibility.
+require a much larger brain than we have, which seems biologically
+impossible.
 
 But even though we clearly see
 only a small part of the visual field, we use an important
@@ -343,21 +390,22 @@ tool to make the most of the resources available: eye movements.
 We are constantly moving our eyes (and head) to capture the
 important elements of the environment with high precision. This scanning of the
 scene is something we know how to do so well that it feels
-natural and simple, and we don't notice the constant eye
-movements we make. But our eyes are never still, and in
-general, we subconsciously choose the most relevant aspects of the scenes to
+natural and simple, and we don't notice our constant eye
+movements. But our eyes are always subconsciously choosing
+for the most relevant aspects of the scenes to
 scan, allowing us to obtain large amounts of information with limited resources.
-With this efficient allocation of resources, we manage to build a
-detailed model of the environment. But despite the efficiency of the system,
+With this efficient allocation of resources, we manage to attain
+a feeling of a detailed perception. But despite the efficiency of the system,
 we often overestimate our perception, as the following examples illustrate.
 
 The phenomenon called change blindness is demonstrated experimentally
-by successively and repeatedly showing two identical
-images except for some specific element
+by flashing in an alternating fashion two identical images
+that differ in some specific element
 ([see YouTube example](https://www.youtube.com/watch?v=FWVDi4aKC-M)).
 The experiment consists of the participant identifying
 what the differences between the images are. What is interesting about the
-phenomenon is that even large differences between the images are difficult to identify. This result contrasts with our subjective impression:
+phenomenon is that even large differences between the images are
+difficult to identify. This result contrasts with our subjective impression:
 although we believe we perceive the image clearly,
 the reality is that it is difficult for
 us to remember even its most conspicuous elements.
@@ -371,12 +419,13 @@ you continue reading) consists
 of a video showing a group of people passing a basketball, and
 the task is to count how many passes are made. At the
 end of the video, it is revealed that a curious animal made
-an undisguised appearance that, nevertheless, goes unnoticed by people
-concentrating on counting the passes. Another example,
-striking for the trained eye of
-the participants, is an experiment in which radiologists were asked to make
+an undisguised appearance that goes unnoticed to the viewer
+concentrated on counting the passes.
+
+Another example, striking because of the participants expertise,
+is an experiment in which radiologists were asked to make
 a diagnosis on some tomography plates in which a visible image of a
-gorilla had been included (Figure 7.4). Although the radiologists
+gorilla had been included (**Figure 8**). Although the radiologists
 examined the image closely, and almost all laid their eyes on the
 gorilla (as measured by the eye-tracking technique), when asked
 at the end of the experiment, most had not noticed the hidden
@@ -389,7 +438,7 @@ over another.
 
 <figure>
   <img src="/files/blog/hym/imD.png" alt="Gorilla" title="Gorilla" width="50%">
-   <figcaption> <strong>Figure 6:</strong> 
+   <figcaption> <strong>Figure 8:</strong> 
   Inattentional blindness is a phenomenon where aspects of the visual field that we do not expect or are not paying attention to go unnoticed. The image shows a classic experiment where a gorilla was inserted into tomography plates, as shown in the enlargement. In the experiment, radiologists were asked to evaluate the tomography without being informed of the gorilla's presence. Most radiologists did not detect the presence of the gorilla, despite many of them fixing their gaze on it (the white circles on the right show the eye movements of one of the radiologists). Image taken with permission from 
   <a href="https://journals.sagepub.com/doi/full/10.1177/0956797613479386?">Drew, Vo & Wolfe (2013) Psychol. Sci. 9. 1848.</a>
   </figcaption>
@@ -405,7 +454,9 @@ given moment, for example, what is behind us. Although it
 is interesting how our "real" or "objective" perception seems
 worse than we believe, this new discovery does not seem to close
 the issue since, from the beginning, we know that our visual
-system has limitations. Moreover, these limitations do not imply that we
+system has limitations.
+
+Moreover, these limitations do not imply that we
 cannot perceive well the specific elements of the world on which we focus
 our attention, just as not having eyes on the back of our
 heads does not mean we cannot turn around to see what is behind
@@ -423,57 +474,51 @@ Perspective on the Ambiguity of the Data: Seeing Requires "Interpreting" the Wor
 
 The last aspect that we will consider 
 is a fundamental aspect of the computational tasks of
-vision: visual stimuli must be interpreted to obtain information about the world,
-because visual stimuli are ambiguous. This stems in part from the fact that
+vision: visual stimuli are ambiguous, so we must interpret
+them to obtain information about the world.
+This stems in part from the fact that
 our visual input is two-dimensional (the plane of our retina, like the
 two dimensions of a photograph), while the external world
 has three spatial dimensions. Our visual system is very good at making
 (subconscious) interpretations of visual stimuli, making it difficult for us
-to appreciate the ambiguities they have, but these occur at various stages
-of visual processing.
-
+how they can be ambiguous, but nonetheless these necessary
+interpretations occur at various stages of visual processing.
 
 <figure>
   <img src="/files/blog/hym/imE.jpeg" alt="Daltmatian" title="Daltmatian" width="50%">
-   <figcaption> <strong>Figure 7:</strong> 
+   <figcaption> <strong>Figure 9:</strong> 
   This figure shows a classic image of a scene that has been converted to black and white, resulting in the appearance of a set of scattered black spots. But despite the chaotic image, our brain interprets this set of spots to see the three-dimensional scene of a Dalmatian walking towards a tree.
   </figcaption>
 </figure>
 
 
 For example, one of the first steps in visual processing
-is to group the pixels into objects (a process we call 
-image segmentation"). This involves using some criterion to determine when two regions
-of the image belong to the same surface. But this is not
-easy. We can think of some simple rules to achieve this (e.g.,
-group pixels that have similar intensity and color and
-are close), but we can also quickly identify examples where this is
-not the case (e.g., a textured surface with marked
-lines, like a piece of clothing). This processing stage, which
-seems simple, actually involves a complex interpretation of the basic structure of
-the image and is an open problem in computer image processing research.
-After segmenting the image, we need to estimate the spatial distribution of
-these surfaces (e.g., how far they are from us,
-their spatial orientation, their size, among others) and group
-them into objects. Continuing with the processing, we construct a three
--dimensional scene of the objects in our environment. All these steps
-involve interpretation stages (e.g., interpreting whether two "pixels"
-belong to the same surface or not) to take us from
-the two-dimensional image to a three-dimensional model of the
-scene. A famous image that illustrates this process is shown in Figure 7.5.
-Although it is an image composed of black spots, our brain
-manages to generate a grouping of the elements, composing
-them intro surfaces, grouping them into objects,
-and finally into a scene. Because of its "disorganized" appearance,
-this example is illustrative, as it is difficult to grasp what
-evidence our brain uses to interpret that chaos of pixels. But beyond
-the details of processing, what matters here is that more than one
-possible interpretation can occur, as the following examples illustrate.
-
+is to group the pixels into segments or surfaces (a process we call 
+image segmentation"). This involves using some criterion to determine
+when two regions of the image belong to the same surface. But this is not
+easy. We can think of some simple rules to group image
+sections together (e.g., group pixels that have similar color and
+are close), but these simple rules will quickly fail in many
+real world cases. Our brain manages to group the elements
+of the images using complex rules that we still do not fully
+understand. For example, **Figure 9** shows a classic scene
+with black spots spread across an image with very coarse
+information. But despite the chaotic appearance of the image, our brain
+manages to group the dots together into surfaces, group these into
+objects, and finally into a scene. Looking at how chaotic
+the image is, it is difficult to understand what evidence our
+brain uses to interpret that chaos of pixels.
+But beyond the details of processing, what matters here is that
+our brain is having to interpret many aspects of the image
+(such as what areas of the image are from the same surface),
+and that in general many interpretations are possible and
+our brain must choose one. The next example illustrates
+how this ambiguity in possible interpretations can lead to
+illusions.
 
 <figure>
   <img src="/files/blog/hym/imE2.jpg" alt="Ames" title="Ames" width="50%">
-   <figcaption> <strong>Figure 8:</strong> 
+   <figcaption> <strong>Figure 10:</strong> 
   The Ames room is a famous illusion that can occur in the real world, and
   is used in science shows and fairs. Using a room with irregular
   geometry, the illusion makes a person look tiny or giant, depending
@@ -485,14 +530,15 @@ possible interpretation can occur, as the following examples illustrate.
 The Ames room is a classic illusion in which we generate a misinterpretation of
 a scene. This is a room with a particular shape: it
 is not rectangular, and both its walls and ceiling and floor are
-sloped and not parallel. To create the illusion, one of its
+sloped and not parallel (**Figure 10**). To create the illusion, one of its
 walls has a carefully placed hole through which we can look and perceive
 a normal rectangular room (with parallel walls, ceiling, and floor).
 When we look through the hole, our perception is wrong,
 as we believe we see a normal room when, in fact,
 we have a distorted room in front of us. Moreover, if
 there are people in the room, depending on their position, we
-will perceive them as giants or as tiny. The important thing to
+will perceive them as giants or as tiny
+(see a video [here](https://www.zmescience.com/feature-post/health/mind-brain/optical-illusion-ames-room/)). The important thing to
 note here is that the visual stimulus in this case (and in
 all others) is ambiguous. It is compatible with both a rectangular
 room (as we mistakenly perceive) and the actual scene of the
@@ -502,14 +548,15 @@ scenes. For example, it could be a giant room with giant
 people, a small room with small people, or it could have
 many different shapes with people of various sizes. The image is compatible
 with all these alternatives because all of them could generate the same pattern
-of light on my retina, and interpreting the image involves choosing one
+of light in our retinas, and interpreting the image involves choosing one
 of these alternatives.
 
 
 This example show that our visual system makes interpretations of visual
-stimuli to perceive the scene around us, but these interpretations can be wrong. But
-how does our brain arrive at these interpretations? Although this question is
-still open, neuroscience can give us some answers. First, it
+stimuli to perceive the scene around us, and that
+these interpretations can be wrong. But how does our brain
+arrive at these specific interpretations? Although this question is
+still an area of research, neuroscience can give us some answers. First, it
 is important to clarify that to investigate this, we normally study simplified
 stimuli that aim to understand the processing of a very specific type
 of information. Some examples could be how we use color to segment
@@ -528,16 +575,27 @@ others. These rules mark how to interpret certain elements of the image
 and are applied at several levels and in parallel. For example,
 a phenomenon observed with simple stimuli is that our vision groups the elements
 of the image that are aligned in the direction of their orientation,
-that is, they are are collinear (Figure 7.6). On the contrary,
+that is, they are are collinear (**Figure 11**). On the contrary,
 elements that are aligned in the direction perpendicular to their orientation do not
 tend to be grouped. Then, using this rule to interpret natural
 images, our visual system can choose the interpretation of the scene that
 groups the elements that are collinear and discard other interpretations.
+
+<figure>
+  <img src="/files/blog/hym/imF.png" alt="Gabor" title="Gabor" width="50%">
+   <figcaption> <strong>Figure 11:</strong> 
+  The grouping of image elements is a fundamental process in visual perception, occurring according to complex rules that we still do not fully understand. The image on the left shows an example of grouping, where our visual system groups the collinear elements despite being surrounded by other similar elements. In the image on the right, we have the same elements but orthogonal to the alignment direction, and our visual system does not group them.
+  </figcaption>
+</figure>
+
+
 Another rule that the visual system uses is that it tends to assume that the
 light source comes from above. A common ambiguity is that the same
 image can be generated by a concave surface illuminated from above and by
-a convex surface illuminated from below, and vice versa (this is why
-when seeing an image of a crater upside down, it looks like a hill).
+a convex surface illuminated from below, and vice versa. This ambiguity
+and our brains preference for light from above is why
+when seeing an image of a crater upside down, it looks like a
+hill (**Figure 12**).
 In the face of this type of ambiguity, our
 visual system will tend to choose the scene where the light comes from
 above and then interpret whether the surface is concave or convex according to
@@ -547,17 +605,10 @@ levels until reaching a global interpretation of the image we receive, which
 will be our perception. But where do these rules come from?; how do
 we know if they are good for perceiving the world?
 
-<figure>
-  <img src="/files/blog/hym/imF.png" alt="Gabor" title="Gabor" width="50%">
-   <figcaption> <strong>Figure 9:</strong> 
-  The grouping of image elements is a fundamental process in visual perception, occurring according to complex rules that we still do not fully understand. The image on the left shows an example of grouping, where our visual system groups the collinear elements despite being surrounded by other similar elements. In the image on the right, we have the same elements but orthogonal to the alignment direction, and our visual system does not group them.
-  </figcaption>
-</figure>
-
 
 <figure>
   <img src="/files/blog/hym/crater.png" alt="Gabor" title="Gabor" width="50%">
-   <figcaption> <strong>Figure 10:</strong> 
+   <figcaption> <strong>Figure 12:</strong> 
   A crater image turned upside down looks like a hill, showing how
   the same image can be generated by different scenes.
   </figcaption>
