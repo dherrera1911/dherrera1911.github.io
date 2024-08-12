@@ -2,10 +2,11 @@
 title: "Dynamics of SARS-CoV-2 seroassay sensitivity: a systematic review and modeling study"
 collection: publications
 permalink: /publication/2023-05-eurosurveillance
-excerpt: 'Background: Serological surveys have been the gold standard to estimate numbers of SARS-CoV-2 infections, the dynamics of the epidemic, and disease severity. Serological assays have decaying sensitivity with time that can bias their results, but there is a lack of guidelines to account for this phenomenon for SARS-CoV-2. Aim: Our goal was to assess the sensitivity decay of seroassays for detecting SARS-CoV-2 infections, the dependence of this decay on assay characteristics, and to provide a simple method to correct for this phenomenon. Methods: We performed a systematic review and meta-analysis of SARS-CoV-2 serology studies. We included studies testing previously diagnosed, unvaccinated individuals, and excluded studies of cohorts highly unrepresentative of the general population (e.g. hospitalised patients).'
+excerpt: 'In this paper we did a systematic meta-analysis of the SARS-CoV-2 serological literature to collect a dataset on how assay sensitivity changes with time after infection. We report that assay characterisics are an essential determinant of sensitivity dynamics, and discuss the potential biases that this introduces in the literature.'
 date: 2023-05-01
 venue: 'Eurosurveillance'
 paperurl: 'https://www.eurosurveillance.org/content/10.2807/1560-7917.ES.2023.28.21.2200809'
+repository: 'https://github.com/dherrera1911/seroreversion_metaanalysis'
 citation: 'Nana Owusu-Boaitey, Timothy W Russell, Gideon Meyerowitz-Katz, Andrew T Levin,
 <strong>Daniel Herrera-Esposito</strong> (2023). &quot; Dynamics of SARS-CoV-2 seroassay sensitivity: a systematic review and modeling study .&quot; <i>Eurosurveillance</i>. 28(21).'
 ---
@@ -16,9 +17,6 @@ involved collecting a novel dataset of the proportion of positive tests
 when testing previously diagnosed individuals. A slightly pre-processed
 version of this unique dataset can be found
 [here](https://github.com/dherrera1911/seroreversion_metaanalysis/blob/master/data/processed_data/PCR_to_serotest_all.csv).
-
-**Data and code:** The data and code for this project are available
-on [GitHub](https://github.com/dherrera1911/seroreversion_metaanalysis/).
 
 **Key public health message:** 
 **What did you want to address in this study?**
