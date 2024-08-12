@@ -10,6 +10,7 @@ tags:
 ---
 
 Translation by the author of the chapter *Es el mundo como lo vemos?*
+([link](/files/teaching/hym/capitulo_hym_dh.pdf) to the original in Spanish)
 for the book
 [*Hitos y Mitos del Cerebro*](/home/dherresp-adm/Docencia/Hitos_mitos/diapositivas_2021/imagenes/cueva_platon.jpeg), edited
 for the homonymous first year course at
@@ -621,8 +622,9 @@ basic processing is perception is good); 2) we allocate our processing
 resources very well, and although a significant part of the world escapes us (which
 is inevitable), we build a decent image of it, and 3) our interpretations
 use rules that are based on the structure of the
-world around us, giving them a solid foundation. Ultimately, the
-answer to whether the world is as we see it will depend on
+world around us, giving them a solid foundation.
+
+Ultimately, the answer to whether the world is as we see it will depend on
 the precise definition of that question and the standards we have for what
 constitutes "seeing the world as it is." And if it is
 disappointing not to have a concrete answer at the end of the chapter,
