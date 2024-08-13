@@ -668,10 +668,11 @@ significant interpretation on our part. In all three cases, we saw
 examples that might suggest that the world is not as we see it.
 But we also discussed reasons why these limitations are not
 determinative: 1) we have very complex behavior that may require a faithful perception
-of the world (and available computational research seems to say that our
-basic processing is perception is good); 2) we allocate our processing
+of the world (and available computational research seems to say that at least
+our basic neural processing is good); 2) we allocate our processing
 resources very well, and although a significant part of the world escapes us (which
-is inevitable), we build a decent image of it, and 3) our interpretations
+is inevitable), we build a decent image of it that we are attending to,
+and 3) our interpretations
 use rules that are based on the structure of the
 world around us, giving them a solid foundation.
 
