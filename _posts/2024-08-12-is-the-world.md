@@ -12,7 +12,7 @@ tags:
 Author translation of the chapter "Es el mundo como lo vemos?"
 ([link to pdf](/files/teaching/hym/capitulo_hym_dh.pdf) in Spanish)
 for the book
-["Hitos y Mitos del Cerebro"](/home/dherresp-adm/Docencia/Hitos_mitos/diapositivas_2021/imagenes/cueva_platon.jpeg), edited
+["Hitos y Mitos del Cerebro"](https://pmb.parlamento.gub.uy/pmb/opac_css/index.php?lvl=notice_display&id=102927), edited
 for the homonymous first year course at
 Universidad de la República, Uruguay. The chapter aims
 to introduce several ideas of perception and neuroscience to
