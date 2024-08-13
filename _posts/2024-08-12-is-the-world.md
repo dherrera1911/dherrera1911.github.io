@@ -52,7 +52,7 @@ it can be interpreted and analyzed
 in many different ways. Therefore, to answer it, we
 must clarify what we mean by the words "see" and 
 "world". For example, if we take "see" as everything
-we can know with our senses and through science, are
+we can know with our senses and through science, we are
 asking whether there is a "world" that escapes us and that
 we cannot know by any method (or if we live in some
 sort of cave from which we cannot escape). This question
@@ -139,7 +139,7 @@ dedicated to extracting information about the world. These areas are densely
 interconnected, and their functions are still not fully understood, but they carry
 out the processing that allows us to recognize a face, estimate a
 distance to throw a projectile, or choose the apple we like the
-most from drawer. This processing occurs subconsciously, and we do
+most from the store. This processing occurs subconsciously, and we do
 not have access to it, but it is important to remember that
 "seeing" constitutes a complex processing and interpretation of the image by
 the brain.
@@ -247,7 +247,7 @@ what information about the
 scene these fibers transmit to the brain. One interesting
 thing about this article is that the authors discuss the
 results in the context of the
-natural behavior of the specimen, which uses vision to hunt and escape
+natural behavior of the organism, which uses vision to hunt and escape
 predators. For example, the frog's visual behavior has the
 peculiarity that it seems not to perceive the static elements of the world
 around it (e.g., food does not catch its attention
