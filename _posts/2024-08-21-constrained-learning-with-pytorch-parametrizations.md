@@ -11,76 +11,82 @@ tags:
 ---
 
 Often times we want to optimize some model parameter while
-keeping it constrained. Some examples are:
+keeping it constrained. Some examples of constraints are:
 
 1. Constrain a vector to have unit norm
 2. Constrain a set of vectors to be orthogonal
 3. Constrain a scalar to be positive
-4. Constrain a matrix to be symmetric positive definite
+4. Constrain a matrix to be symmetric positive definite (SPD)
 
-Parametrizations are a technique to turn a
+Parametrizations are a technique that turns a
 difficult constrained optimization problem into a simpler
-unconstrained optimization problem that can be solved with standard
-optimization algorithms.
-
+unconstrained optimization problem.
 In this post we introduce parametrizations for
 non-experts, and show how we can implement them in Pytorch
-with very few lines of code, using the Pytorch
-Parametrizations tool `torch.nn.utils.parametrize`. We will
+with very few lines of code, using the module
+`torch.nn.utils.parametrize`. We will
 study two examples with synthetic data:
-constraining a vector to be on the unit circle, and
-constraining a matrix to be symmetric positive definite.
+constraining a vector to have unit norm, and
+constraining a matrix to be SPD.
 
+This tutorial focuses on simple examples that are fully
+implemented (parameters are optimized on simulated data),
+and shows how to implement simple SPD parametrizations
+that are important in statistics and ML. We also assume
+relatively little background knowledge, laying out the
+formalism and the code in a thoroughly explained way.
 More in depth information on Pytorch parametrizations can be found in the
-[Parametrizations tutorial](https://pytorch.org/tutorials/intermediate/parametrizations.html),
-but in contrast to that tutorial, here we focus on
-simpler examples and a more general audience.
+[Parametrizations tutorial](https://pytorch.org/tutorials/intermediate/parametrizations.html)
+(aimed at more advanced users).
+
 
 Constrained optimization
 ---------------------
 
-When doing optimization in Pytorch, we have a parameter
+When doing optimization in Pytorch, we usually have a parameter
 $$\theta \in \mathbb{R}^n$$ and a loss function $$L(\theta)$$,
 and we use gradient descent on $$\theta$$ to minimize $$L(\theta)$$.
-For this, at each iteration we compute the negative gradient
-of the loss function with respect to the parameter $$\theta$$,
-and then update the parameter in that direction.
-Thus, a typical optimization step looks like this:
+For this, at each iteration we update $$\theta$$ in the direction
+of the negative gradient of $$L(\theta)$$:
 
 $$\theta \leftarrow \theta - \alpha \nabla_{\theta} L(\theta)$$
 
-where $$\alpha$$ is the learning rate and $$\nabla_{\theta} L(\theta)$$
-is the gradient of the loss function with respect to $$\theta$$.
+$$\nabla_{\theta} L(\theta)$$
+is the gradient of the loss function with respect to $$\theta$$
+and $$\alpha$$ is the learning rate.
 
-In constrained optimization, we additionally constrain
-$$\theta$$ to fulfill some condition, so that $$\theta \in C$$
-where $$C \subseteq \mathbb{R}^n$$. One simple example
-is the unit norm constraint, where we want
-to optimize a vector $$\theta$$ such that $$\|\theta\| = 1$$.
-In this case, $$\theta \in C$$, where $$C = \{x: \|x \| = 1\}$$,
-which is the unit sphere $$S^{n-1}$$. However, doing
-optimization on the sphere, which is a non-Euclidean space,
+In constrained optimization, we also want to constrain
+$$\theta$$ to fulfill some condition, or equivalently,
+to be in a certain subset $$C \subseteq \mathbb{R}^n$$.
+One simple example is constraining a vector $$\theta$$
+such that $$\|\theta\| = 1$$, or $$\theta \in C$$,
+where $$C$$ is the unit sphere $$C = \{x: \|x \| = 1\}$$.
+However, doing optimization on the sphere 
 is more complicated than doing optimization in the
-unconstrained space $$\mathbb{R}^n$$.
+unconstrained space $$\mathbb{R}^n$$. This kind of
+problem is called a constrained optimization problem.
 
 Example: Average on a circle, unconstrained
 ---------------------
 
-Let's show a concrete example of such a problem in Pytorch.
-We have some data distributed in the unit circle and
-we want to find the point $$\theta$$ that has the minimum average
-squared distance to the data. We also want to constrain $$\theta$$
-to be on the circle. We will show how to solve this
-constrained optimization problem below, but first
-lets solve the unconstrained version of the problem
-to use as a reference later.
+Let's show a concrete example of a unit-norm constrain
+problem with Pytorch.
 
-First we generate the data on the sphere by
-sampling points from a Gaussian distribution in
-$$\mathbb{R}^2$$, and projecting these points onto to
-the unit sphere by dividing them by their norm [^1].
+We have some vectors $$x_i$$ distributed in the unit circle, and
+we want to find vector $$\theta$$ that minimizes the
+squared distance to the data $$L(\theta) = \sum_i \| \theta - x_i \|^2$$.
+We also want to constrain $$\theta$$
+to be on the circle. Before showing how to solve the
+constrained optimization problem, lets implement the
+unconstrained optimization problem to use as a reference.
+
+First we generate the data on the circle by
+sampling points from the distribution
+$$\mathcal{N}(\mu, \mathbb{I}\sigma^2)$$ in $$\mathbb{R}^2$$,
+and dividing these points by their norm [^1].
 
 ```python
+### GENERATE THE DATA ON THE CIRCLE
 import torch
 
 # Simulation parameters
@@ -95,10 +101,10 @@ data_gauss = mu + torch.randn(n_points, n_dimensions) * sigma
 data = data_gauss / data_gauss.norm(dim=1, keepdim=True)
 ```
 
-We can visualize the data to see that they are in the
-unit circle (we add a little bit of jitter for visualization).
+We visualize the data
 
 ```python
+### PLOT THE DATA
 import matplotlib.pyplot as plt
 
 def plot_circle_data(ax, data, title):
@@ -120,16 +126,14 @@ plt.show()
 ![](/files/blog/parametrizations/data.png)
 
 
-Next, we generate a Python class to perform the optimization.
-The class `AverageUnconstrained` has 
-has as a parameter the vector ``theta``, and a function
-``forward`` that computes the squared distance of each
-point to ``theta`` (functions named ``forward`` are called
-when we call the call the model object as a
-function, i.e. ``model(data)``). We
-use the Pytorch `nn.Module` class to define the model [^2].
+Next, we generate the Python class to perform the optimization.
+Our class `AverageUnconstrained` has parameter vector ``theta``,
+and a function ``forward`` that computes the squared distance
+of each point to ``theta``[^2]. We use the Pytorch `nn.Module` class to
+define the model [^3].
 
 ```python
+### DEFINE CLASS FOR UNCONSTRAINED OPTIMIZATION
 import torch.nn as nn
 
 class AverageUnconstrained(nn.Module):
@@ -149,12 +153,14 @@ class AverageUnconstrained(nn.Module):
 
 ```
 
-Next, we define a loss function that just averages the
-individual losses of each data point, and a function
-`train_model` to perform gradient descent on the model
-parameters:
+Next, we define a function `loss_function` that computes the
+loss from the model outputs (in this case it's just the
+average of the outputs), and a function `train_model` that
+performs gradient descent on the model parameters:
+
 
 ```python
+### DEFINE LOSS FUNCTION AND OPTIMIZATION FUNCTION
 # Loss function
 def loss_function(loss_vector):
     loss = torch.mean(loss_vector)
@@ -178,6 +184,7 @@ We are now done with the setup, so lets optimize the model and
 visualize the result.
 
 ```python
+### OPTIMIZE THE THETA AND VISUALIZE
 # Initialize the model
 model_unconstrained = AverageUnconstrained(n_dimensions)
 
@@ -197,67 +204,65 @@ plt.show()
 
 ![](/files/blog/parametrizations/unconstrained.png)
 
-We see that the learned point is not on the circle, as expected.
+We see that the learned point is not on the circle, as we would
+expect since we did not add any constraint.
 
 Formalism of parametrizations
 ---------------------
 
-In the previous example, we just updated $$\theta$$ in the direction
-of the negative gradient at each iteration. The problem
-is that updating the parameter in this way
-will lead to a point that is not on the circle. So, how can
-we update the parameter in such a way
-that it remains on the circle?
+It is evident that updating the parameter in the direction
+of the negative gradient will usually lead to a point
+that is not in the circle. So, how can we update the
+parameter in such a way that it remains on the circle?
 
 An intuitive alternative is to project $$\theta$$ back
-onto the unit circle after each update. However, doing this naively
-might introduce some problems, such as affecting the
-inner workings of the optimization algorithm (e.g.
-if there's a momentum term). Also, while
-the unit circle is a simple set, other constraints might be
-more complicated to project $$\theta$$ onto.
+onto the unit circle by $$\theta \leftarrow \theta / \| \theta \|$$
+after each update. However, doing this naively
+might introduce problems (e.g. messing up momentum terms
+in the optimizer). Also, while projecting onto the circle
+is straightforward, other constraints might be more complicated to
+project $$\theta$$ to once we left the set $$C$$, so we need a
+more general approach.
 
-Parametrizations also involve projecting something
-onto the set $$C$$, but in a more principled way.
-The idea is to introduce a new parameter $$\eta \in \mathbb{R}^m$$
-that is unconstrained, and a differentiable function
-$$f$$ mapping from values of $$\eta$$ to values of $$\theta$$
-in the set $$C$$, $$f: \mathbb{R}^m \rightarrow C$$. Then, we
-just apply the optimization algorithm to $$\eta$$ instead
-of $$\theta$$, using the following update rule:
+Parametrizations also involve projecting onto the set
+$$C$$, but in a more principled way. The idea is to
+introduce a new unconstrained parameter $$\eta \in \mathbb{R}^m$$,
+and a differentiable function $$f(\eta) = \theta$$ that maps
+from values in $$\mathbb{R}^m$$ to $$C$$, $$f: \mathbb{R}^m \rightarrow C$$.
+Then, we do optimization on $$\eta$$ instead
+of $$\theta$$, as follows:
 
 $$\eta \leftarrow \eta - \alpha \nabla_{\eta} L\left(f(\eta)\right)$$
 
-Note that we use the same loss function as before, now
-composed with the function $$f$$, and we take the gradient
-with respect to $$\eta$$. We need $$f$$ to be differentiable
-so that we can obtain the gradient with respect to $$\eta$$.
+Note that we use the same loss function as before, but
+now composed with the function $$f$$ so it is a
+function of $$\eta$$. We now take the gradient with respect to
+$$\eta$$, which we can update without worrying, since it's
+not unconstrained. The parameter of interest $$\theta$$ is
+constrained, though, and is given by $$f(\eta)$$.
 
 Lets come back to our example of constraining $$\theta$$
-to be on the unit circle. We can make $$\eta$$ an unconstrained
-2D vector, and define $$f(\eta) = \eta / \| \eta \|$$, which maps
-$$\eta$$ onto the unit circle[^3]. Lets see how we can
-implement this idea in Pytorch.
+to be on the unit circle. One way to implement the
+parametrization is to take $$\eta$$ to be a
+2D vector, and define $$f(\eta) = \eta / \| \eta \|$$,
+which maps $$\eta$$ onto the unit circle[^4]. Lets see
+how we can implement this idea in Pytorch.
 
 Implementation of unit circle constrain in Pytorch
 ---------------------
 
-If we wanted to manually include the parametrization
-above in our class ``AverageUnconstrained``, we would
-have to take into account several considerations.
-The new class would have a parameter ``eta``, and
-``theta`` would no longer be an ``nn.Parameter``. We
-would have to figure out how we want
-to update and access ``theta``. If we wanted to assign
-a value to ``theta``, we need to go through ``eta``,
-which would also require some thinking, particularly
-for more complicated parametrizations.
+We will implement the parametrization using the Pytorch
+tool `torch.nn.utils.parametrize`. We do this because
+if we wanted to manually implement the parametrization
+(which we could), we would have to take care of several
+considerations, such as actually implementing a
+parameter $$\eta$$ in our model, making sure that $$\theta$$
+is always up to date, and much more.
 
 The Pytorch tool `torch.nn.utils.parametrize` does all of
-this work for us (and more). We just need to implement the
-function $$f$$, and then `parametrize` takes care of the
-rest. The only thing we need to do is to implement
-$$f$$ in a specific way, as described next.
+this work for us. We just need to implement the
+function $$f$$ in a specific way so that `parametrize` can
+use it, as described next.
 
 **How to implement $$f$$ for Pytorch parametrizations**
 
@@ -274,17 +279,18 @@ class NormalizeVector(nn.Module):
         return theta
 ```
 
-The function `forward` implements the function $$f$$
-by taking a vector `eta` and returning the normalized
+The function `forward` implements $$f$$
+by taking vector `eta` and returning the normalized
 vector `theta` with a length of 1 (the names of the variables
 don't have to be `eta` and `theta`).
 
 Next, let's use `parametrize` to create a new class
-`AverageInCircle` where parameter `theta` is constrained
-to be on the unit circle. This is done by only one line
-to our original class ``AverageUnconstrained``:
+where `theta` is constrained to be on the unit circle.
+This is done by adding only one line to our original
+unconstrained class:
 
 ```python
+### DEFINE CLASS FOR CONSTRAINED OPTIMIZATION
 from torch.nn.utils import parametrize
 
 class AverageInCircle(nn.Module):
@@ -307,13 +313,13 @@ class AverageInCircle(nn.Module):
         return distance_squared
 ```
 
-Now, the `eta` parameter that is actually being optimized
-is taken care of in the background. The code for optimizing
-this constrained model is the same as
-for the unconstrained model. Let's optimize the model and
-see the result.
+Now, the unconstrained `eta` parameter that is actually
+being updated by gradient descent is taken care of in the background.
+Importantly, the code for optimizing the constrained model doesn't
+change. Let's optimize the model and see the result.
 
 ```python
+### OPTIMIZE THE CONSTRAINED THETA AND VISUALIZE
 # Initialize the model
 model_circle = AverageInCircle(n_dimensions)
 
@@ -340,23 +346,23 @@ Implementation of symmetric positive definite parametrization in Pytorch
 
 Let's look at a more complicated example that appears often
 in statistics and machine learning: optimization of a matrix
-constrained to be symmetric positive definite
-(SPD). This is a common problem because
+constrained to be SPD[^5]. This is a common problem because
 covariance matrices and many other
 important mathematical objects are SPD matrices.
-
-SPD matrices are symmetric matrices whose eigenvalues are
-all positive. There is no simple condition on the matrix entries
-to ensure that it is SPD.
 
 There are some well-known parametrizations for SPD matrices,
 and we will show how to implement two of them in Pytorch:
 the Log-Cholesky parametrization, and the matrix logarithm
 parametrization (see the article
 [Unconstrained parametrizations for variance-covariance matrices](https://link.springer.com/article/10.1007/BF00140873) for an overview).
-Remember that to define the parametrization we need to define
-the function $$f$$ that maps from the unconstrained parameter
-space to the space of SPD matrices.
+
+Remember, to define a parametrization we need to define
+a function $$f$$ that maps from the unconstrained parameter
+space to the space of SPD matrices. So, what we will do below
+is describe functions $$f$$ that map from the unconstrained
+space of lower-triangular matrices (for the Log-Cholesky
+parametrization) and symmetric matrices (for the matrix
+logarithm parametrization) to the space of SPD matrices.
 
 **Log-Cholesky parametrization**
 
@@ -368,58 +374,53 @@ to our model parameter as $$\Sigma$$ instead of $$\theta$$).
 This is called the Cholesky decomposition of $$\Sigma$$,
 and it is unique.
 
-We could think of parametrizing SPD matrices in terms of
-the lower triangular matrix $$L$$, but $$L$$ is still
-constrained to have positive diagonal elements.
-We can get rid of this positive constraint by
-taking the logarithm of the diagonal elements of $$L$$,
-resulting in an unconstrained lower-triangular
-matrix $$M$$. Let's express this idea in terms of the
-function $$f$$.
+A parametrization in terms of $$L$$ though would not
+work, because $$L$$ is constrained to have positive
+diagonal elements. The Log-Cholesky parametrization
+gets rid of this constraint by taking the logarithm
+of the diagonal elements of $$L$$, resulting in an unconstrained
+lower-triangular matrix $$M$$. Let's see how we can
+define an $$f(M)=\Sigma$$ according to this reasoning.
 
 Let $$\lfloor M \rfloor$$ denote the matrix with only
 the strictly lower-triangular part of lower-triangular
 matrix $$M$$, and $$\mathbb{D}(M)$$ the diagonal matrix
-with the diagonal elements of $$M$$. Thus, we have that
-$$M = \mathbb{D}(M) + \lfloor M \rfloor$$ and
-$$L = \exp(\mathbb{D}(M)) + (\lfloor M \rfloor)$$ (note
-that to take the exponential of a diagonal matrix we just 
-take the exponential of the diagonal elements).
+with the diagonal elements of $$M$$. Then,
+
+$$M = \mathbb{D}(M) + \lfloor M \rfloor$$
+
+$$L = e^{\mathbb{D}(M)} + \lfloor M \rfloor$$
+
+(note that to take the exponential of a diagonal matrix
+we just take the exponential of the diagonal elements).
 Then, the function $$f$$ that maps from the unconstrained
 space of lower triangular matrices
-$$\mathbb{R}^{\frac{n(n+1)}{2}}$$[^4] to the
+$$\mathbb{R}^{\frac{n(n+1)}{2}}$$[^6] to the
 SPD matrices is defined as follows:
 
-$$f(M) = \left( \exp(\mathbb{D}(M)) + \lfloor M \rfloor \right) \left( \exp(\mathbb{D}(M)) + \lfloor M \rfloor \right)^T = L L^T = \Sigma$$
+$$f(M) = \left[ e^{\mathbb{D}(M)} + \lfloor M \rfloor \right] \left[ e^{\mathbb{D}(M)} + \lfloor M \rfloor \right]^T = L L^T = \Sigma$$
 
-($$M$$ is equivalent to the $$\eta$$ from the previous section,
-it is the unconstrained parameter).
 Thus, we have a function that we can use to define our
-parametrization.
+parametrization in terms of unconstrained parameter $$M$$.
 
 Before we implement this in Pytorch,
 we should note that there is one thing that
-``parametrize`` needs some more help with: assigning
-a value to the parameter $$M$$.
+``parametrize`` needs some more help with: assigning specific
+values to the parameter $$\Sigma$$.
 
 **Right-inverse function for assigning the constrained parameter**
 
-Imagine that we implemented our model using the Log-Cholesky
-parametrization, and that we want to assign a given value
-to $$\Sigma$$ (for example, we might want to initialize it
-a certain way). However, behind the curtain
-there is the parameter $$M$$ that gives us $$\Sigma$$
-by $$f(M) = \Sigma$$. To assign a certain value to
-$$\Sigma$$, we actually need to assign a value to $$M$$
-such that $$f(M) = \Sigma$$. The `parametrize` tool
-does not know how to do this automatically, so we
-need to define a function that
-maps from $$\Sigma$$ to $$M$$ (it's a sort of inverse
-of $$f$$, although it doesn't need to mathematically
-be an inverse, since $$f$$ might not be injective, like
-in the circle constrain example). We do
-this by defining a function called ``right_inverse`` inside
-the class that implements the parametrization.
+Suppose that we want to assign a specific value $$\Sigma'$$
+to the parameter $$\Sigma$$, in our parametrized Pytorch model (e.g. 
+we want to initialize it in a certain way). But in the
+parametrized model, there is a parameter $$M$$
+in the background that gives us $$\Sigma$$ by
+$$f(M) = \Sigma$$. Thus, we can't just assign a value
+$$\Sigma'$$ to $$\Sigma$$, we need to assign a value $$M'$$ to
+$$M$$ such that $$f(M') = \Sigma'$$. The `parametrize` tool
+takes care of the details of this, but it needs to be
+given a function that maps from $$\Sigma$$ to $$M$$, which
+is called ``right-inverse`` in the class with function $$f$$.
 
 We already described the right-inverse function for our
 Log-Cholesky parametrization when we
@@ -432,6 +433,8 @@ and the ``right-inverse`` function for the Log-Cholesky
 parametrization in Pytorch:
 
 ```python
+### IMPLEMENTATION OF LOG-CHOLESKY PARAMETRIZATION
+
 # Log-Cholesky parametrization
 class SPDLogCholesky(nn.Module):
     def forward(self, M):
@@ -459,40 +462,40 @@ class SPDLogCholesky(nn.Module):
 
 We are now ready to implement a model that optimizes a matrix
 while constraining it to be SPD, using the Log-Cholesky parametrization.
-Let's set up a problem where we want to do such optimization
-and implement the model.
+Let's set up a problem to test this optimization.
 
 **Estimating a covariance matrix with missing data**
 
 We will use a problem suggested by a user at
 [CrossValidated](https://stats.stackexchange.com/a/653094/134438).
 The problem is estimating the covariance matrix of a dataset
-where some observations are missing.
+where some observations are missing, which is a common problem
+with real-world datasets.
 
-We have a dataset $$X$$ that is a matrix with $$n$$ rows
-and $$p$$ columns, where each row is an observation and
-each column is a variable. Our dataset is missing
-some variables for some rows, that is, some entries
-$$X_{ij}$$ are missing. The data is missing
-completely at random.
+We have a dataset $$X$$ with $$n$$ rows and $$p$$ columns,
+where each row is an observation and
+each column is a variable. The dataset is missing
+some entries $$X_{ij}$$ completely at random. The
+problem is that we want to estimate the covariance matrix
+of $$X$$, which we call $$\Sigma$$.
 
-To estimate any given element
-$$\Sigma_{kl}$$ of the covariance of $$X$$, we could
-use the rows where both columns $$k$$ and $$l$$ are
+To estimate any given element $$\Sigma_{kl}$$, we could use only
+the rows of $$X$$ where both columns $$k$$ and $$l$$ are
 observed. However, this procedure does not guarantee
-that the resulting matrix is SPD. We will estimate
-the covariance matrix for such a missing-data problem
-using unconstrained optimization and using
-the Log-Cholesky parametrization, and compare the results.
+that the resulting matrix is SPD. To solve this problem,
+we will do maximum-likelihood estimation of the covariance,
+ignoring the missing values. We will implement models to
+optimize $$\Sigma$$ both without constraint and
+with the Log-Cholesky parametrization, and compare the results.
 
 First, we generate a dataset for this problem. We start by
 generating a mean ``mu_true`` and a covariance matrix
-``Sigma_true`` (we generate
-the covariance matrix starting from a random
-lower-triangular matrix and then applying the function
-$$f$$ to obtain an SPD matrix).
+``Sigma_true`` (we use our already defined $$f$$ function
+to generate a random `Sigma_true` from a random `M`)
 
 ```python
+### GENERATE DATA PARAMETERS
+
 # Set random seed
 torch.manual_seed(1911)
 
@@ -504,11 +507,13 @@ log_chol_par = SPDLogCholesky()
 Sigma_true = log_chol_par.forward(M)
 ```
 
-Next, we generate the data by sampling from a multivariate
-Gaussian with mean `mu_true` and covariance `Sigma_true`,
-and then we set some entries to be missing at random.
+Next, we generate the data by sampling from
+$$\mathcal{N}(\mu_{\text{true}}, \Sigma_{\text{true}})$$,
+and setting some entries to be missing at random.
 
 ```python
+### GENERATE GAUSSIAN DATA WITH MISSING VALUES
+
 from torch.distributions import MultivariateNormal
 
 # Generate data
@@ -535,22 +540,20 @@ tensor([[ 1.1146,  0.4793,  1.4138,  0.7827,     nan],
         [ 0.7755,  2.7918,  1.0426,  1.2220,     nan]])
 ```
 
-We will use models that compute the log-likelihood
-of the dataset under a Gaussian distribution, with parameters
-``mu`` and ``Sigma``. The models will also compute the likelihood
-of observations with missing values, by ignoring the missing
-values.
+Next, we implement models that compute the negative log-likelihood
+of the data under a Gaussian distribution with parameters
+``mu`` and ``Sigma``, while ignoring missing values.
 
-To compute the log-likelihood
-of an observation with missing entries we use only
-the values of ``mu`` and ``Sigma`` corresponding to the observed
-entries. That is, if a row has missing values for the columns $$1$$
+For a given data point $$x_i$$ with missing values, we
+compute the log-likelihood of the observed values
+by using only the corresponding elements of ``mu`` and ``Sigma``.
+That is, if a row has missing values for the columns $$1$$
 and $$3$$, we will remove the elements $$1$$ and $$3$$ from the ``mu``
 and the rows and columns $$1$$ and $$3$$ from the ``Sigma``,
 and we will use the remaining elements to compute the
 log-likelihood with a Gaussian distribution of lower dimension.
 
-Before we proceed, we implement three useful functions:
+We first implement three useful functions:
 `gaussian_log_likelihood` computes the
 log-likelihood of a data point under a Gaussian distribution,
 `remove_nan_statistics` takes as input the statistics ``mu`` and
@@ -560,6 +563,8 @@ log-likelihood of the dataset with missing values as described in the
 previous paragraph.
 
 ```python
+### IMPLEMENT FUNCTIONS TO COMPUTE MISSING DATA LOG-LIKELIHOOD
+
 def gaussian_log_likelihood(data, mu, Sigma):
     # Compute the log likelihood of a single
     # data point under a Gaussian distribution
@@ -603,12 +608,10 @@ def nll_observed_data(mu, Sigma, data):
 ```
 
 Now, we implement the model that computes the negative log-likelihood
-as described above, and we don't constrain ``Sigma`` to be
-SPD:
+as described above, and we don't constrain ``Sigma`` to be SPD:
 
 ```python
-# Create class that computes the negative log-likelihood of data
-# with missing values under a Gaussian distribution.
+### IMPLEMENT UNCONSTRAINED MODEL TO COMPUTE MISSING DATA NEGATIVE LL
 
 class NLLObserved(nn.Module):
     def __init__(self, mu, Sigma):
@@ -625,11 +628,15 @@ We then implement the model that uses the Log-Cholesky parametrization,
 which only requires adding one line to the previous model:
 
 ```python
+### IMPLEMENT LOG-CHOLESKY MODEL TO COMPUTE MISSING DATA NEGATIVE LL
+
 class NLLObservedCholesky(nn.Module):
     def __init__(self, mu, Sigma):
         super().__init__()
         self.mu = nn.Parameter(mu.clone())
         self.Sigma = nn.Parameter(Sigma.clone())
+
+        ### ONLY CHANGE: Add the parametrization in terms of f to Sigma
         parametrize.register_parametrization(self, "Sigma", SPDLogCholesky())
 
     def forward(self, data):
@@ -643,6 +650,8 @@ Because of how we set up the functions, we can use the same
 `train_model` function as in the previous example.
 
 ```python
+### OPTIMIZE THE MODELS
+
 # Generate initial parameters
 mu_init = torch.zeros(n_dimensions)
 Sigma_init = torch.eye(n_dimensions)
@@ -660,6 +669,8 @@ Let's first check whether the covariance matrices are
 SPD for each model:
 
 ```python
+### CHECK IF COVARIANCE MATRICES ARE SPD
+
 eigenvalues_unconstrained = torch.linalg.eigh(model_unconstrained.Sigma.detach())
 eigenvalues_cholesky = torch.linalg.eigh(model_cholesky.Sigma.detach())
 
@@ -679,6 +690,8 @@ Let's see how the estimated covariances compare to the true
 covariance matrix:
 
 ```python
+### VISUALIZE THE LEARNED COVARIANCE MATRICES
+
 # Visualize the learned Sigmas
 fig, ax = plt.subplots(1, 3, figsize=(9, 3))
 
@@ -718,29 +731,28 @@ just show how to implement it in Pytorch.
 The logarithm and exponential of a matrix are defined in terms of
 [series of matrix powers](https://en.wikipedia.org/wiki/Logarithm_of_a_matrix).
 For invertible matrices however (like SPD matrices), the matrix logarithm
-and exponential can be obtained from the eigenvalue decomposition.
-If $$A = U \Lambda U^{-1}$$ is the eigenvalue decomposition of $$A$$,
-then $$\log(A) = U \log(\Lambda) U^{-1}$$, where $$\log(\Lambda)$$
-is the diagonal matrix with the logarithm of the eigenvalues of $$A$$,
-and $$\exp(A) = U \exp(\Lambda) U^{-1}$$, where $$\exp(\Lambda)$$
-is the diagonal matrix with the exponential of the eigenvalues of $$A$$.
+and exponential can be obtained as $$\log(A) = U \log(\Lambda) U^{-1}$$ and
+$$\exp(A) = U \exp(\Lambda) U^{-1}$$, where $$A = U \Lambda U^{-1}$$.
+For a given SPD matrix, we obtain the matrix logarithm by taking the
+eigenvalue decomposition, taking the logarithm of the eigenvalues,
+and then reconstructing the matrix.
 
-While an SPD matrix will have positive eigenvalues, the matrix logarithm
-of an SPD matrix will not necessarily have positive eigenvalues.
-In fact, the matrix logarithm of an SPD matrix will be a symmetric matrix.
-Thus, the matrix logarithm function maps from the complicated space
-of SPD matrices to the simple vector space of symmetric matrices. Since the
-matrix exponential is the inverse of the matrix logarithm, the matrix
-exponential function maps from the vector space of symmetric matrices
+While an SPD matrix has positive eigenvalues, its matrix logarithm
+can have any real eigenvalues. In fact, the matrix logarithm of an SPD
+matrix will be a symmetric matrix.
+Thus, the matrix logarithm function maps from the SPD matrices space
+to the simple vector space of symmetric matrices. Conversely,
+the matrix exponential maps from the symmetric matrices
 to the non-linear space of SPD matrices.
 
 From the above, we see that we can parametrize SPD matrices in terms of
-symmetric matrices (more specifically, the non-redundant elements
-of symmetric matrices), and we can use as a function $$f$$ the
-matrix exponential and as the right-inverse the matrix logarithm.
-Let's implement this in Pytorch:
+the unconstrained space of the lower-triangular part of symmetric
+matrices, with $$f$$ being the matrix exponential, and its
+right-inverse being the matrix logarithm. Let's implement this
+in Pytorch:
 
 ```python
+### IMPLEMENTATION OF MATRIX LOGARITHM PARAMETRIZATION
 
 import scipy # Scipy has the matrix logarithm function
 
@@ -784,10 +796,13 @@ Mario for making time to chat about manifolds with me!
 
 [^1]: Of interest, the distribution on the sphere obtained by projecting a Gaussian distribution is known as the Angular Gaussian or Projected Normal distribution.
 
-[^2]: A Pytorch `nn.Module` is a Pytorch class that has several methods that are useful for defining and optimizing models. By creating our class with the call `class MyClass(nn.Module):`, the class inherits these methods from `nn.Module`. These then come in handy for example to define parameters with `nn.Parameter`, or to pass the model to an optimizer.
+[^2]: Functions named ``forward`` are called when we call the call the model object as a function, i.e. ``model(data)``
 
-[^3]: Note that actually, the function $$f(\eta) = \eta/ \| \eta \|$$ does not map from $$\mathbb{R}^m$$ to the unit circle, because it is not defined at 0. However, in practice this is not generally a problem, as $\eta$ will not generally be driven towards 0 in this setup.
+[^3]: A Pytorch `nn.Module` is a Pytorch class that has several methods that are useful for defining and optimizing models. By creating our class with the call `class MyClass(nn.Module):`, the class inherits these methods from `nn.Module`. These then come in handy for example to define parameters with `nn.Parameter`, or to pass the model to an optimizer.
 
-[^4]: Note that although $$M$$ is a matrix, it is equivalent to an unconstrained vector in $$\mathbb{R}^{\frac{n(n+1)}{2}}$$ having its lower-triangular elements, and it is unconstrained
+[^4]: Note that actually, the function $$f(\eta) = \eta/ \| \eta \|$$ does not map from $$\mathbb{R}^m$$ to the unit circle, because it is not defined at 0. However, in practice this is not generally a problem, as $\eta$ will not generally be driven towards 0 in this setup.
 
+[^5]: SPD matrices are symmetric matrices whose eigenvalues are all positive. There is no simple condition on the matrix entries to ensure that it is SPD.
+
+[^6]: Note that although $$M$$ is a matrix, it is equivalent to an unconstrained vector in $$\mathbb{R}^{\frac{n(n+1)}{2}}$$ having its lower-triangular elements, and it is unconstrained
 
