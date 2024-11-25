@@ -21,22 +21,18 @@ Academic positions
 
 * **2022-present**: Postdoctoral Researcher, [Burge Lab](https://jburge.psych.upenn.edu/), University of Pennsylvania
 
-* **2017-2022**: Assistant (Grado 2, UdelaR scale), Laboratory of Neuroscience,
+* **2017-2022**: Research/Teaching Assistant, Laboratory of Neuroscience,
   Faculty of Sciences, UdelaR
-  * Research and teaching position
 
-* **2021-2022**: Assistant (Grado 2), [Interdisciplinary Center for
+* **2021-2022**: Research/Teaching Assistant, [Interdisciplinary Center for
     Data Science and Machine Learning (CICADA)](https://cicada.uy/), UdelaR
-  * Research and teaching position
 
-* **2013-2017**: Assistant (Grado 1), [Biochemistry Department](http://www.bioquimica.fmed.edu.uy/), Faculty of Medicine, UdelaR
-  * Research and teaching position
+* **2013-2017**: Research/Teaching Assistant (Grado 1), [Biochemistry Department](http://www.bioquimica.fmed.edu.uy/), Faculty of Medicine, UdelaR
 
-<span style="font-size: smaller;">Note: The Uruguay academic career track has
-5 levels or Grados. Grado 5, 4 and 3 correspond to Full, Adjunt, and Assistant
-professor respectively. Grado 1 is a TA/RA position at the late undergraduate
-or early graduate level. Grado 2 is a research and teaching position at the
-late graduate to postdoc level.</span>  
+<span style="font-size: smaller;">Note: In Uruguay, Teaching Assistant positions
+are paid University positions, independent of graduate studies. These positions are
+limited in number and attained through very competitive exams. They range from
+late-undergraduate to postdoctoral-level responsibilities.</span>  
   
 
 Skills
@@ -108,15 +104,17 @@ Service
 * Founding co-organizer of the **Annual Conference Prof. Ruben Budelli**,
   an annual invited talk in Uruguay, supported by the Federation of
   Latin American and Caribbean Neuroscience Societies (FALAN)
+  * 2024 edition: [*Extracellular vesicles as stress signals important to brain development and function*](https://neurocienciasfalan.org/networking/budelli/), Tracy L. Bale, University of Colorado
   * 2023 edition: [*Powering the social brain: Mitochondria and metabolism in social behavior*](https://neurocienciasfalan.org/networking/budelli/), Carmen Sandi, EPFL
 * Reviewer for:
   * Journal of Vision
   * Nature Communications
   * Neurons Behavior Data Analysis and Theory (NBDT)
   * Scientific Reports
-  * Emerging Infectious Diseases (CDC)
+  * Emerging Infectious Diseases (CDC journal)
   * COSYNE 2023
   * SVRHM Workshop @ NeurIPS 2021 and 2022
+  * NeurReps Workshop @ NeurIPS 2024
 
 
 Science communication
