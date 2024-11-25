@@ -65,6 +65,21 @@ Talks
   {% endfor %}</ul>
 
 
+Software
+======
+
+Packages I authored:
+
+- [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/)
+- [**`amatorch`**](https://amatorch.readthedocs.io/en/latest/)
+- [**`projected_normal_distribution`**](https://github.com/dherrera1911/projected_normal_distribution)
+
+Packages I contributed to:
+ 
+- [**`geomstats`**](https://geomstats.github.io/)
+- [**`plenoptic`**](https://plenoptic.readthedocs.io/en/latest/)
+
+
 Technical reports
 ======
 During the COVID-19 pandemic, I participated in UdelaR's
