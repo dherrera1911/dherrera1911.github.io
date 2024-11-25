@@ -1,8 +1,8 @@
 ---
 title: "A geometric analysis of task-specific natural image statistics"
 collection: talks
-type: "Talk"
-permalink: /talks/2012-03-01-talk-1
+type: "Invited talk"
+permalink: /talks/2024-geometry-alex-williams-lab
 venue: "Alex H. Williams lab meeting, Flatiron Institute"
 date: 2024-08-02
 location: "New York, NY, USA"
