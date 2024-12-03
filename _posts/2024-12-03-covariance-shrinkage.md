@@ -9,29 +9,30 @@ tags:
 ---
 
 Covariance matrices are one of the most important objects in
-statistics and machine learning.
-However, estimating covariance matrices can be difficult,
+statistics and machine learning, essential to many algorithms.
+But estimating covariance matrices can be difficult,
 especially in high-dimensional settings. In this post we
 introduce covariance shrinkage, a technique
-to improve the estimation of covariance matrices. We also
+to improve covariance matrix estimation. We also
 provide a PyTorch implementation of a popular shrinkage
-estimator, the Oracle Approximating Shrinkage (OAS) estimator.
+technique, the Oracle Approximating Shrinkage (OAS) estimator.
 
 ## Introduction
 
-One issue with estimating covariance matrices is that
-for a random variable with $$p$$ dimensions, the covariance
-matrix has $$p \times p$$ entries. Of those entries, $$(p+1)p/2$$
-are independent parameters need to be estimated, because
-of the symmetry of the covariance matrix.[^1] This means
-that the number of parameters needed to estimate the
-covariance matrix grows fast with the number of dimensions.
-An interesting and challenging statistical problem is how to
-estimate a covariance matrix when the number of observations $$n$$
-is not large compared to the number of dimensions $$p$$.
+One issue with estimating the true covariance matrix
+$$\Sigma$$ for a given population or random variable is that,
+if $$p$$ is the number of dimensions, $$\Sigma$$ has
+$$p \times p$$ entries, of which $$(p+1)p/2$$
+are independent parameters need to be estimated (because
+of the matrix symmetry[^1]). This means that the number of parameters
+needed to estimate the covariance matrix grows fast with the
+number of dimensions. That is, covariance estimation suffers
+from the curse of dimensionality. An interesting and challenging statistical
+problem is how to estimate a covariance matrix when the number of
+observations $$n$$ is not large compared to the number of dimensions $$p$$.
 
-The simplest approach to estimating the covariance
-matrix is to use the sample covariance. Given a dataset of
+The simplest way to estimate the covariance
+matrix is to use the sample covariance $$S$$. Given a dataset of
 $$n$$ observations of $$p$$-dimensional
 random variable $$X \in \mathbb{R}^p$$, with the observations labeled
 as $$X_1, X_2, \ldots, X_n$$, the sample covariance matrix is
@@ -40,13 +41,21 @@ defined as
 $$S = \frac{1}{n-1} \sum_{i=1}^n (X_i - \bar{X})(X_i - \bar{X})^T$$
 
 where $$\bar{X}$$ is the sample mean. $$S$$ is an unbiased
-estimator of the true population covariance matrix. This means
+estimator of the true population covariance matrix, which means
 that the expected value of $$S$$ is the true covariance matrix.
 
 However, the sample covariance has some drawbacks as an
 estimator. Mainly, $$S$$ is unstable when $$n$$ is small
-compared to $$p$$, meaning that it can have large errors.
-Let's visualize the variability in $$S$$ with some simulations:
+compared to $$p$$, meaning that it can have large errors
+with respect to the true covariance $$\Sigma$$.
+
+Let's visualize this variability with some simulations.
+We first define a diagonal covariance matrix $$\Sigma$$. Then
+we take 20 samples from a 10-dimensional Gaussian distribution
+that has $$\Sigma$$ as its true covariance matrix. Then we
+compute the sample covariance matrix $$S$$ for these
+observations. We repeat this process 5 times and plot the
+resulting sample covariance matrices.
 
 ```python
 import torch
@@ -55,10 +64,12 @@ import matplotlib.pyplot as plt
 
 torch.manual_seed(2)
 
-n_dim = 10
-n_samples = 20
-n_reps = 5
+# Simulation parameters
+n_dim = 10      # Number of dimensions of the random variable
+n_samples = 20  # Number of samples to use
+n_reps = 5      # Number of sample covariance matrices to compute
 
+# True covariance matrix
 cov_pop = torch.linspace(start=0.1, end=1, steps=n_dim)
 cov_pop = torch.diag(cov_pop)
 
@@ -76,7 +87,7 @@ fig, axs = plt.subplots(1, n_reps+1, figsize=(15, 3))
 im = axs[0].imshow(cov_pop, cmap='seismic', vmin=-max_val, vmax=max_val)
 axs[0].set_title("Population cov", fontsize=18)
 for i, ax in enumerate(axs[1:]):
-    im = ax.imshow(covs_sample[i], cmap='seismic', vmin=-max_val, vmax=max_val)
+    ax.imshow(covs_sample[i], cmap='seismic', vmin=-max_val, vmax=max_val)
     ax.set_title(f"Sample cov {i+1}", fontsize=18)
 
 plt.tight_layout()
@@ -94,86 +105,98 @@ plt.show()
 ```
 ![](/files/blog/shrinkage/cov_var1.png)
 
-Also, many applications require inverting the covariance matrix.
-For one, $$S$$ is not even invertible if the number of observations
-is less than the number of dimensions. But even if the sample
-covariance is invertible, the estimation errors can be highly
-amplified when inverting the matrix.
+We see that for each different draw of 20 samples the corresponding
+$$S$$ changes considerably, because of the high variability in
+the sample covariance matrix.
+
+Another problem with $$S$$ as an estimator, is that many applications require
+inverting the covariance matrix. When $$p > n$$, the sample covariance
+is not even invertible, making $$S$$ unsuitable for some applications.
+But even if $$p<n$$ and $$S$$ is invertible, the high estimation error in
+$$S$$ can be highly amplified when inverting the matrix.
 
 Thus, the sample covariance matrix might not be the best
 estimator for some applications. How can we obtain better
-estimates of the covariance matrix?
-One alternative is to use shrinkage.
+estimates of the covariance matrix, though? One alternative is to use
+shrinkage.
 
 ## Shrinkage estimators
 
-Shrinkage estimators are a class of estimators that shrink the
-estimates towards a target value. These estimators reduce the
-variance in the estimates, at the cost of introducing some bias,
-a classic trade-off in statistics.
-
 Shrinkage is an essential idea in statistics. Intuitively,
-if we observe an extreme value in a random sample
-(like the entries of the sample covariance), it is likely that
+if we observe an extreme value in a random sample, it is likely that
 noise contributed to the extremeness of the value. In other words,
-the extreme value is not representative of the true underlying
-parameter. Shrinkage accounts for this phenomenon by
-pulling the more extreme values towards the middle.
+we can expect that extreme observed values are not representative of
+the true underlying parameter. Shrinkage is a statistical procedure to
+account for this phenomenon when estimating the underlying parameters,
+by pulling the more extreme values in an observed sample towards the middle.
+The more extreme the value, the more we shrink it towards the middle. This
+procedure reduces the variance of the estimates, at the cost of introducing
+some bias, a classical example of the bias-variance trade-off in statistics.
 
-One way to apply the shrinkage rationale above to a covariance
-matrix is to compute a "middle", or "target", that we can shrink
-the entries of the covariance towards. This will reduce the variance
+Shrinkage estimators of the covariance incorporate this idea into
+covariance estimation. Like in the example above, the idea consists
+of shrinking the observed sample covariance towards a "middle" or
+"target" value. This will reduce the variance
 of the estimates, at the cost of introducing some bias.
-A popular target matrix is the diagonal matrix that
-shares the same total variance as the sample covariance matrix:
+
+What is a good target matrix to shrink the sample covariance towards?
+A popular target is the following diagonal matrix, which
+is an isotropic estimator of the covariance matrix:
 
 $$\hat{F} = \frac{1}{p} \text{tr}(S) I$$
 
-where $$I$$ is the identity matrix. $$\hat{F}$$ is a highly
-structured estimator of $$\Sigma$$, that has low variance but
+where $$I$$ is the identity matrix. We can think of $$\hat{F}$$
+as an estimator of $$\Sigma$$ that has low variance but
 possibly high bias.
 
-We can bring the values of $$S$$ towards $$\hat{F}$$ (i.e. shrink
-$$S$$) by taking a linear combination of the two matrices.
-This achieves a compromise between the low bias
-of $$S$$ and the low variance of $$\hat{F}$$. This leads to
-the class of linear shrinkage estimators:
+The next question to ask ourselves is, how do we "shrink" the sample
+covariance towards the target matrix $$\hat{F}$$? Linear shrinkage
+estimators do this by taking a linear combination of the sample
+covariance matrix $$S$$ and the target matrix $$\hat{F}$$,
+with a parameter $$\rho$$ that controls the amount of shrinkage:
 
 $$\hat{\Sigma} = (1-\rho) S + \rho \hat{F}$$
 
-In the formula above, $$\rho$$ is a parameter that controls the
-amount of shrinkage. When $$\rho = 0$$, the estimate is the sample
-covariance matrix.
+When $$\rho = 0$$, the estimate is the sample covariance matrix.
 
-The challenge in covariance shrinkage estimation is to find
-the optimal value of $$\rho$$ that optimizes some criterion.
-We present a popular method and its implementation in PyTorch
-the next section.
-
+The last question we need to ask ourselves is how to find a value
+of $$\rho$$ that results in a good estimate. This is a challenging
+problem, as the optimal value of $$\rho$$ depends on the true
+covariance matrix, which is unknown. We turn to this question
+in the next section.
 
 ## Oracle Approximating Shrinkage estimator (with implementation)
 
-The Oracle Approximating Shrinkage (OAS) estimator is a method
-for obtaining the value of $$\rho$$.[^2] The estimator tries to
-approximate the optimal value of $$\rho$$ that minimizes the
-mean squared error (MSE) with respect to the true covariance
-matrix:
+A typical way to find a good value of $$\rho$$ is to start
+by assuming that the true covariance matrix $$\Sigma$$ is known,
+and choosing an estimation criterion to minimize. For example,
+one common criterion to optimize is the mean squared error (MSE)
+between the estimated covariance matrix $$\hat{\Sigma}$$ and the true
+covariance matrix $$\Sigma$$:
 
 $$\min_{\rho} \mathbb{E} \left[ \left\| \hat{\Sigma} - \Sigma \right\|_F^2 \right]$$
 
-where $$\| \cdot \|_F$$ is the Frobenius norm.[^3] The authors of
-the original [OAS paper](https://ieeexplore.ieee.org/document/5484583)
-derive the following closed-form formula approximating the
-the $$\rho$$ that minimizes the expression above (under a Gaussian
-assumption). This approximation is particularly useful when the
-number of observations is small. The formula for the OAS
-approximation is given by:
+where $$\| \cdot \|_F$$ is the Frobenius norm[^3]. Under a known
+$$\Sigma$$, it is often possible to find a formula for what
+the optimal value of $$\rho$$ is, which can be denoted as
+the oracle value of $$\rho$$.
+
+In practice, however, we do not know the true covariance matrix
+$$\Sigma$$. Thus, the challenge is to find a way to approximate
+the unknown optimal value of $$\rho$$ when $$\Sigma$$ is unknown.
+
+This is what [Oracle Approximating Shrinkage (OAS)](https://ieeexplore.ieee.org/document/5484583)
+does: it proposes a formula to approximate the oracle value of $$\rho$$
+that minimizes the MSE, under the assumption that the data is
+Gaussian distributed. This method performs particularly well
+when the number of observations $$n$$ is small compared to the number
+of dimensions $$p$$. The OAS formula for $$\rho$$ is as follows:
 
 $$\hat{\rho}_{OAS} = \frac{(1-2p)\mathrm{Tr}(S^2) + \mathrm{Tr}^2(S)}
 {(n+1-2/p) (\mathrm{Tr}(S^2) - \mathrm{Tr}^2(S)/p} $$
 
 where we cap the result at 1 (if the value of the formula
-above is larger than one, we set $\hat{\rho}_{OAS}=1$).
+above is larger than one, we set $$\hat{\rho}_{OAS}=1$$).
  
 Let's implement the OAS estimator in PyTorch:
 
@@ -235,9 +258,13 @@ def oas_estimator(X, assume_centered=False):
     return oas_estimate
 ```
 
-Let's now test the OAS estimator with the same simulations as before,
-and compare the MSE of the OAS estimator $$\hat{Sigma}$$ to the MSE of
-the sample covariance matrix $$S$$:
+Let's now test the OAS estimator with the same simulations as before.
+We again sample 20 observations from a 10-dimensional Gaussian,
+and we compute both the sample covariance matrix $$S$$ and the
+OAS estimator $$\hat{\Sigma}$$ for the data. We repeat this
+process 5 times, and plot both the covariance estimates, and
+compute the MSE between the true covariance matrix and both
+estimators.
 
 ```python
 n_dim = 10
@@ -291,29 +318,31 @@ We see that:
 
 ## Linear Discriminant Analysis with shrinkage
 
-Let's next see the OAS estimator used in practice, by applying
-Linear Discriminant Analysis (LDA) to the MNIST dataset.
+Let's next compare the OAS estimator to the sample covariance
+estimator in a practical setting. For this, we will
+use Linear Discriminant Analysis (LDA) as applied to the MNIST dataset.
+
+### Linear Discriminant Analysis
 
 LDA is a standard technique for
 dimensionality reduction and classification. In a labeled dataset,
-LDA learns the filters that maximize the separation between classes
+LDA learns the filters that maximize the separation between classes,
 while minimizing the within-class variability. This goal can be
 mathematically formulated as follows:
 
 - In a dataset with $$C$$ classes, the between-class scatter matrix
 $$S_B = \frac{1}{C}\sum_{i=1}^C (\mu_i - \mu)(\mu_i - \mu)^T$$
 (i.e. covariance of the class means centered around the global mean)
-indicates how the class means are spread out in the data space
+indicates how the class means are spread out in the data space. In this
+formula, $$\mu_i$$ is the mean of class $$i$$, and $$\mu$$ is the global mean.
 - The within-class scatter matrix
 $$S_W = \frac{1}{N} \sum_{i=1}^C \sum_{x \in X_i} (x - \mu_i)(x - \mu_i)^T$$,
-where $$N$$ is the total number of samples, and $$X_i$$ is the
-set of samples in class $$i$$ indicates how the data points are spread out
-around their class means (this is the residual covariance around the
-class means)
-- Along direction $$w$$, the variance between classes is given by
-$$w^T S_B w$$, and the variance within classes is given by
-$$w^T S_W w$$
-- The directions that maximize between-class separation while
+where $$N$$ is the total number of samples, and $$X_i$$ is the residual
+covariance around the class means, i.e. the within-class variability.
+- If we project the data along vector $$w$$, the variance between classes
+will be given by $$w^T S_B w$$, and the variance within classes will
+be given by $$w^T S_W w$$
+- Thus, the filters $$w$$ that maximize between-class separation while
 minimizing within-class variance are the directions that maximize
 the following ratio:
 
@@ -324,21 +353,22 @@ are the eigenvectors of the matrix $$S_W^{-1} S_B$$
 (see [here](https://en.wikipedia.org/wiki/Linear_discriminant_analysis#Multiclass_LDA)).
 Thus, we can find the LDA filters by computing the two scatter matrices,
 inverting $$S_W$$, and computing the eigenvectors of the product $$S_W^{-1} S_B$$. 
+LDA is also a linear classifier, which uses these projection to
+classify new data points based on how close they are to the class means.
 
 The quality of the LDA filters depends on the quality of the
-estimates of $$S_W$$ and $$S_B$$. Thus, we can compare the filters
-learned when using the sample covariance estimator and the OAS
-estimator for $$S_W$$. This gives us a natural way to evaluate
-both methods: we can use the classification accuracy of the LDA
-linear decoder with the projections learned with both methods
-as a measure of the quality of the covariance matrix.
+estimates of $$S_W$$ and $$S_B$$. That's why LDA is a good
+application to compare covariance estimators: the quality 
+of the LDA filters (which we can measure by the classification
+accuracy) can be used as a proxy for the quality of the covariance
+estimates.
 
-We apply LDA to the MNIST dataset because it has a large number of
-dimensions.
+### Applying LDA to MNIST
 
 Let's first load the MNIST dataset using the `torchvision` package.
+
 Note that we modify the dataset in two ways to better suit our example. 
-First, we subsample the number of images, keeping only 2000 pictures so that
+First, we subsample the number of images, keeping only 2000 images so that
 the number of observations $$n$$ is close to the number of dimensions $$p$$.
 Second, we remove from the learning procedure some pixels that have zero
 variance (i.e. they are constant across all images) to avoid
@@ -407,7 +437,8 @@ plt.show()
 
 ![](/files/blog/shrinkage/mnist.png)
 
-Next, let's compute the scatter matrices $$S_W$$ and $$S_B$$
+Next, let's compute the scatter matrices $$S_W$$ and $$S_B$$. Matrix $$S_W$$
+is estimated both using the sample covariance and the OAS estimator.
 
 ```python
 # Compute the class means
@@ -460,7 +491,7 @@ plt.show()
 
 ![](/files/blog/shrinkage/lda_filters.png)
 
-We see that the filters obtained with the sample covariance estimator are
+We see that the filters obtained with the sample covariance estimator seem 
 unstable, in that they put most of their weight into a few pixels. The
 OAS filters are noisy, as we could expect from the small number of samples
 used, but they are smoother and better distributed across the image.
@@ -491,7 +522,7 @@ Sample LDA accuracy: 0.79
 OAS LDA accuracy: 0.83
 ```
 
-We see that the OAS estimator provides a better classification accuracy
+We see that the OAS estimator of $$S_W$$ provides a better classification accuracy
 than the sample covariance estimator. This is a common result in
 practice, as the OAS estimator provides a more stable estimate of the
 covariance matrix. In fact, there is
@@ -501,10 +532,22 @@ estimators. This problem has also been studied in the literature, for
 example in the influential paper
 [Regularized Discriminant Analysis](https://www.tandfonline.com/doi/abs/10.1080/01621459.1989.10478752).
 
+## Conclusion
 
-[^1]: The covariance matrix is symmetric, so the number of unique entries is given by those at and below the diagonal. The first row has $1$ element at/below the diagonal, the second row has $2$, and so on up to the $n$th row, which has $p$ elements. So the number of unique elements equals the sum $1 + 2 + \ldots + p$. Note that adding the first and last element equals $p+1$, adding the second and second-to-last element also equals $p+1$, and so on. So, we have $p/2$ pairs of elements that sum to $p+1$, resulting in the known formula $1 + 2 + \ldots + p = \frac{(p+1)p}{2}$
+In this post, we learned that although the sample covariance matrix is a simple
+and unbiased estimator of the true covariance matrix, it may not be the best
+estimator for some applications. In particular, when the number of observations
+is small compared to the number of dimensions, shrinkage estimators can provide
+more stable and accurate estimates of the covariance matrix. We introduced a
+type of linear shrinkage estimator, the Oracle Approximating Shrinkage (OAS),
+which aims to minimize the MSE between the estimated and true covariance matrix.
+Other shrinkage estimators exist, both of the non-linear type, and also aiming
+to minimize other criteria, such as in the spectral domain.
+
+
+[^1]: The covariance matrix is symmetric, so the number of unique entries is given by those at and below the diagonal. The first row has $$1$$ element at/below the diagonal, the second row has $$2$$, and so on up to the $$n$$th row, which has $$p$$ elements. So the number of unique elements equals the sum $$1 + 2 + \ldots + p$$. Note that adding the first and last element equals $$p+1$$, adding the second and second-to-last element also equals $$p+1$$, and so on. So, we have $$p/2$$ pairs of elements that sum to $$p+1$$, resulting in the known formula $$1 + 2 + \ldots + p = \frac{(p+1)p}{2}$$
 
 [^2]: The name Oracle Approximating Shrinkage comes from the fact that there is a formula for the optimal shrinkage coefficient when the true covariance matrix is known, which we can refer to as the oracle value. The OAS estimator approximates this oracle value when the true covariance matrix is unknown.
 
-[^3]: The Frobenius norm of a matrix $A$ is defined as $\| A \|_F = \sqrt{\sum_{i,j} A_{ij}^2}$, which also equal to $\text{tr}(A^T A)$, where $\text{tr}$ is the trace operator.
+[^3]: The Frobenius norm of a matrix $$A$$ is defined as $$\| A \|_F = \sqrt{\sum_{i,j} A_{ij}^2}$$, which also equal to $$\text{tr}(A^T A)$$, where $$\text{tr}$$ is the trace operator.
 
