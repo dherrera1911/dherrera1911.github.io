@@ -108,6 +108,12 @@ Some reports I contributed to:
 
 Teaching
 ======
+
+  I have held teaching positions at Universidad de la República uninterruptedly
+  from 2013 to 2022. I have taught courses or lectures in Biochemistry,
+  Neuroscience, and Machine Learning, and mentored groups of undergraduate
+  students in year-long research projects. A list of my teaching activities
+  (click the link to expand and see teaching materials):
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
