@@ -53,6 +53,8 @@ Skills
 
 Publications
 ======
+  Click on the titles to see brief summaries of the papers, and
+  links to data and code.
   <ul>{% for post in site.publications reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
