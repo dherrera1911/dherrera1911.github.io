@@ -176,7 +176,7 @@ covariance matrix $$\Sigma$$:
 
 $$\min_{\rho} \mathbb{E} \left[ \left\| \hat{\Sigma} - \Sigma \right\|_F^2 \right]$$
 
-where $$\| \cdot \|_F$$ is the Frobenius norm[^3]. Under a known
+where $$\| \cdot \|_F$$ is the Frobenius norm[^2]. Under a known
 $$\Sigma$$, it is often possible to find a formula for what
 the optimal value of $$\rho$$ is, which can be denoted as
 the oracle value of $$\rho$$.
@@ -547,7 +547,5 @@ to minimize other criteria, such as in the spectral domain.
 
 [^1]: The covariance matrix is symmetric, so the number of unique entries is given by those at and below the diagonal. The first row has $$1$$ element at/below the diagonal, the second row has $$2$$, and so on up to the $$n$$th row, which has $$p$$ elements. So the number of unique elements equals the sum $$1 + 2 + \ldots + p$$. Note that adding the first and last element equals $$p+1$$, adding the second and second-to-last element also equals $$p+1$$, and so on. So, we have $$p/2$$ pairs of elements that sum to $$p+1$$, resulting in the known formula $$1 + 2 + \ldots + p = \frac{(p+1)p}{2}$$
 
-[^2]: The name Oracle Approximating Shrinkage comes from the fact that there is a formula for the optimal shrinkage coefficient when the true covariance matrix is known, which we can refer to as the oracle value. The OAS estimator approximates this oracle value when the true covariance matrix is unknown.
-
-[^3]: The Frobenius norm of a matrix $$A$$ is defined as $$\| A \|_F = \sqrt{\sum_{i,j} A_{ij}^2}$$, which also equal to $$\text{tr}(A^T A)$$, where $$\text{tr}$$ is the trace operator.
+[^2]: The Frobenius norm of a matrix $$A$$ is defined as $$\| A \|_F = \sqrt{\sum_{i,j} A_{ij}^2}$$, which also equal to $$\text{tr}(A^T A)$$, where $$\text{tr}$$ is the trace operator.
 
