@@ -16,7 +16,7 @@ of serological assay sensitivities for SARS-CoV-2 across time. This
 involved collecting a novel dataset of the proportion of positive tests
 when testing previously diagnosed individuals. A slightly pre-processed
 version of this unique dataset can be found
-[here](https://github.com/dherrera1911/seroreversion_metaanalysis/blob/master/data/processed_data/PCR_to_serotest_all.csv).
+[here](https://github.com/dherrera1911/seroreversion_metaanalysis/blob/master/data/processed_data/PCR_to_serotest_all.csv). [Data and code](https://github.com/dherrera1911/seroreversion_metaanalysis).
 
 **Key public health message:** 
 **What did you want to address in this study?**
