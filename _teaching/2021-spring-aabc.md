@@ -23,11 +23,11 @@ varying difficulty levels.
 The notebooks, which are in Spanish, can be found in my
 [GitHub repository](https://github.com/dherrera1911/talleres_aabc).
 The list of notebooks is as follows:
-* [Class 1: Introduction to ML](notebooks/Taller1-Introduccion_AA.ipynb)
-* [Class 2: Supervised learning](notebooks/Taller2-Aprendizaje_supervisado.ipynb)
-* [Class 3: Unsupervised learning](notebooks/Taller3-Aprendizaje_no_supervisado.ipynb)
-* [Class 4: Representing the data](notebooks/Taller4-Representacion_y_modelado.ipynb)
-* [Class 5: Neural networks](notebooks/Taller5-Redes_neuronales_Random_forests.ipynb)
-* [Class 6: Model evaluation](notebooks/Taller6-Evaluacion_de_modelos.ipynb)
-* [Class 7: Applications, spike sorting](notebooks/Taller7-Aplicaciones.ipynb)
+* [Class 1: Introduction to ML](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller1-Introduccion_AA.ipynb)
+* [Class 2: Supervised learning](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller2-Aprendizaje_supervisado.ipynb)
+* [Class 3: Unsupervised learning](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller3-Aprendizaje_no_supervisado.ipynb)
+* [Class 4: Representing the data](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller4-Representacion_y_modelado.ipynb)
+* [Class 5: Neural networks](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller5-Redes_neuronales_Random_forests.ipynb)
+* [Class 6: Model evaluation](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller6-Evaluacion_de_modelos.ipynb)
+* [Class 7: Applications, spike sorting](https://github.com/dherrera1911/talleres_aabc/blob/master/notebooks/Taller7-Aplicaciones.ipynb)
 
