@@ -18,23 +18,15 @@ keeping it constrained. Some examples of constraints are:
 3. Constrain a scalar to be positive
 4. Constrain a matrix to be symmetric positive definite (SPD)
 
-Parametrizations are a technique that turns a
-difficult constrained optimization problem into a simpler
-unconstrained optimization problem.
+Parametrizations are a tool to turn a constrained optimization
+problem into a simpler unconstrained optimization problem.
 In this post we introduce parametrizations for
-non-experts, and show how we can implement them in Pytorch
-with very few lines of code, using the module
-`torch.nn.utils.parametrize`. We will
-study two examples with synthetic data:
+non-experts, and show how we can implement them in Pytorch.
+We will study two examples with synthetic data:
 constraining a vector to have unit norm, and
 constraining a matrix to be SPD.
 
-This tutorial focuses on simple examples that are fully
-implemented (parameters are optimized on simulated data),
-and shows how to implement simple SPD parametrizations
-that are important in statistics and ML. We also assume
-relatively little background knowledge, laying out the
-formalism and the code in a thoroughly explained way.
+We also assume relatively little background knowledge. 
 More in depth information on Pytorch parametrizations can be found in the
 [Parametrizations tutorial](https://pytorch.org/tutorials/intermediate/parametrizations.html)
 (aimed at more advanced users).
@@ -44,8 +36,8 @@ Constrained optimization
 ---------------------
 
 When doing optimization in Pytorch, we usually have a parameter
-$$\theta \in \mathbb{R}^n$$ and a loss function $$L(\theta)$$,
-and we use gradient descent on $$\theta$$ to minimize $$L(\theta)$$.
+$$\theta \in \mathbb{R}^n$$ and a loss function $$L(\theta)$$
+that we minimize with gradient descent.
 For this, at each iteration we update $$\theta$$ in the direction
 of the negative gradient of $$L(\theta)$$:
 
@@ -59,12 +51,8 @@ In constrained optimization, we also want to constrain
 $$\theta$$ to fulfill some condition, or equivalently,
 to be in a certain subset $$C \subseteq \mathbb{R}^n$$.
 One simple example is constraining a vector $$\theta$$
-such that $$\|\theta\| = 1$$, or $$\theta \in C$$,
+such that $$\|\theta\| = 1$$, or such that $$\theta \in C$$,
 where $$C$$ is the unit sphere $$C = \{x: \|x \| = 1\}$$.
-However, doing optimization on the sphere 
-is more complicated than doing optimization in the
-unconstrained space $$\mathbb{R}^n$$. This kind of
-problem is called a constrained optimization problem.
 
 Example: Average on a circle, unconstrained
 ---------------------
@@ -72,11 +60,12 @@ Example: Average on a circle, unconstrained
 Let's show a concrete example of a unit-norm constrain
 problem with Pytorch.
 
-We have some vectors $$x_i$$ distributed in the unit circle, and
-we want to find vector $$\theta$$ that minimizes the
+We have some data vectors $$x_i$$ distributed in the unit circle, and
+we want to find the vector $$\theta$$ that minimizes the
 squared distance to the data $$L(\theta) = \sum_i \| \theta - x_i \|^2$$.
-We also want to constrain $$\theta$$
-to be on the circle. Before showing how to solve the
+We also want $$\theta$$ to be on the circle.
+
+Before showing how to solve the
 constrained optimization problem, lets implement the
 unconstrained optimization problem to use as a reference.
 
@@ -154,8 +143,8 @@ class AverageUnconstrained(nn.Module):
 ```
 
 Next, we define a function `loss_function` that computes the
-loss from the model outputs (in this case it's just the
-average of the outputs), and a function `train_model` that
+loss by taking the average of the squared distances.
+We also define the function `train_model` that
 performs gradient descent on the model parameters:
 
 
@@ -180,7 +169,7 @@ def train_model(model, data, n_iterations=100, lr=0.1):
         optimizer.step()
 ```
 
-We are now done with the setup, so lets optimize the model and
+Lets use these functions to optimize the model and
 visualize the result.
 
 ```python
@@ -210,19 +199,18 @@ expect since we did not add any constraint.
 Formalism of parametrizations
 ---------------------
 
-It is evident that updating the parameter in the direction
-of the negative gradient will usually lead to a point
-that is not in the circle. So, how can we update the
+We see that updating the parameter in the direction
+of the negative gradient will usually lead us to
+break the constraint, which in this case is to stay
+in the circle. So, how can we update the
 parameter in such a way that it remains on the circle?
 
 An intuitive alternative is to project $$\theta$$ back
 onto the unit circle by $$\theta \leftarrow \theta / \| \theta \|$$
 after each update. However, doing this naively
-might introduce problems (e.g. messing up momentum terms
-in the optimizer). Also, while projecting onto the circle
-is straightforward, other constraints might be more complicated to
-project $$\theta$$ to once we left the set $$C$$, so we need a
-more general approach.
+can introduce problems. Also, while projecting onto the circle
+is straightforward, projecting onto other constraint sets might be more
+difficult. Parametrizations provide us with a more general approach.
 
 Parametrizations also involve projecting onto the set
 $$C$$, but in a more principled way. The idea is to
@@ -234,19 +222,18 @@ of $$\theta$$, as follows:
 
 $$\eta \leftarrow \eta - \alpha \nabla_{\eta} L\left(f(\eta)\right)$$
 
-Note that we use the same loss function as before, but
+We use the same loss function as before, but
 now composed with the function $$f$$ so it is a
 function of $$\eta$$. We now take the gradient with respect to
-$$\eta$$, which we can update without worrying, since it's
-not unconstrained. The parameter of interest $$\theta$$ is
-constrained, though, and is given by $$f(\eta)$$.
+$$\eta$$. Because $$\eta$$ is unconstrained, we can update it
+with gradient descent without worrying. The parameter of
+interest $$\theta$$ is given by $$f(\eta)$$ and it will
+always satisfy the constraint.
 
-Lets come back to our example of constraining $$\theta$$
-to be on the unit circle. One way to implement the
-parametrization is to take $$\eta$$ to be a
-2D vector, and define $$f(\eta) = \eta / \| \eta \|$$,
-which maps $$\eta$$ onto the unit circle[^4]. Lets see
-how we can implement this idea in Pytorch.
+For our example of constraining $$\theta$$
+to be on the unit circle, we can parametrize $$\theta$$
+with the function $$f(\eta) = \eta / \| \eta \|$$[^4].
+Lets see how we can implement this idea in Pytorch.
 
 Implementation of unit circle constrain in Pytorch
 ---------------------
@@ -257,7 +244,7 @@ if we wanted to manually implement the parametrization
 (which we could), we would have to take care of several
 considerations, such as actually implementing a
 parameter $$\eta$$ in our model, making sure that $$\theta$$
-is always up to date, and much more.
+is always up to date, and more.
 
 The Pytorch tool `torch.nn.utils.parametrize` does all of
 this work for us. We just need to implement the
@@ -266,9 +253,9 @@ use it, as described next.
 
 **How to implement $$f$$ for Pytorch parametrizations**
 
-To use ``parametrize``, we need to define the function inside
-an `nn.Module` class, and our function $$f$$ should
-be called ``forward`` inside this class. Let's
+To use ``parametrize``, we need to define the function $f$
+inside an `nn.Module` class, implemented in the method 
+``forward`` inside this class. Let's
 see how this looks like in our example:
 
 ```python
@@ -279,7 +266,7 @@ class NormalizeVector(nn.Module):
         return theta
 ```
 
-The function `forward` implements $$f$$
+The method `forward` implements $$f$$
 by taking vector `eta` and returning the normalized
 vector `theta` with a length of 1 (the names of the variables
 don't have to be `eta` and `theta`).
