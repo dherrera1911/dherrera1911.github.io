@@ -37,19 +37,23 @@ late-undergraduate to postdoctoral-level responsibilities.</span>
 
 Skills
 ======
-* Programming languages:
-  * Python (Pytorch)
-  * R
-  * Stan
-  * Matlab
-* Statistics:
+
+* Software:
+  * Programming languages that I am proficient in: Python (Pytorch), Matlab, R, Stan
+  * Version control and continuous integration: Git, GitHub, GitHub Actions
+  * Python package development and publishing
+* Data analysis:
   * Bayesian statistics
   * Hierarchical regression models
-  * Image processing, ideal observer models
+  * Image and signal processing
   * Data analysis in manifolds
-* Psychophysics experiments
-* Science communication and teaching
-
+  * Linear algebra
+* Communication:
+  * Besides scientific articles, I have experience writing blogs and science communication pieces
+  * I have been interviewed about science for newspapers, radio and TV
+  * I many years of teaching and mentoring experience
+* Experimental techniques:
+  * Psychophysics
 
 Publications
 ======
@@ -124,6 +128,9 @@ Teaching
 Service
 ======
 
+* I am an [active user](https://stats.stackexchange.com/users/134438/dherrera)
+  of the StackExchange CrossValidated forum, where I answer questions about statistics
+  and machine learning
 * Founding co-organizer of the **Annual Conference Prof. Ruben Budelli**,
   an annual invited talk in Uruguay, supported by the Federation of
   Latin American and Caribbean Neuroscience Societies (FALAN)
@@ -166,7 +173,7 @@ Science communication
   School *Liceo Carlos Vaz Ferreira*
 
 
-Funding and awards
+Funding and recognitions
 ======
 * Presenters Travel Grant, Computational and Systems Neuroscience (COSYNE) 2022
 * Official collaborator of the Uruguayan government's
