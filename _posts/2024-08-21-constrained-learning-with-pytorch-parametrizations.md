@@ -10,13 +10,16 @@ tags:
   - Manifolds
 ---
 
-Often times we want to optimize some model parameter while
-keeping it constrained. Some examples of constraints are:
-
-1. Constrain a vector to have unit norm
-2. Constrain a set of vectors to be orthogonal
-3. Constrain a scalar to be positive
-4. Constrain a matrix to be symmetric positive definite (SPD)
+Often times, we want to optimize some model parameter while
+keeping it constrained. For example, we might want a
+parameter vector to have unit norm, a set of vectors to
+be orthogonal with respect to each other, or a matrix
+to be symmetric positive definite (SPD). For the specific
+cases where the constraint is for the parameter to be on
+a manifold, a common approach is to use Riemannian
+optimization. However, there is a simpler and often
+more efficient way to do constrained optimization: we can
+use a technique called **parametrization**.
 
 Parametrizations are a tool to turn a constrained optimization
 problem into a simpler unconstrained optimization problem.
@@ -54,16 +57,68 @@ One simple example is constraining a vector $$\theta$$
 such that $$\|\theta\| = 1$$, or such that $$\theta \in C$$,
 where $$C$$ is the unit sphere $$C = \{x: \|x \| = 1\}$$.
 
+When we introduce a constraint, we can no longer just
+updating the parameter $$\theta$$ in the direction of the
+negative gradient. Doing so is likely to break the
+constraint, e.g. it will drive $$\theta$$ outside of the
+unit sphere $$C$$. So, how can we update the
+parameter in such a way that it remains on $$C$$?
+
+For the example of the sphere, 
+an intuitive alternative is to project $$\theta$$ back
+onto the unit circle by $$\theta \leftarrow \theta / \| \theta \|$$
+after each update. However, doing this naively
+can introduce problems. Also, while projecting onto the circle
+is straightforward, projecting onto other constraint sets (e.g.
+orthonormal vectors) might be more difficult.
+
+There are different approaches to constrained optimization.
+Among these, parametrizations are a simple and efficient 
+method that is easy to implement and that is popular in
+machine learning.
+
+
+Formalism of parametrizations
+---------------------
+
+Parametrizations involve projecting onto the set
+$$C$$, but in a more principled way than the example
+above. The idea is to introduce a new unconstrained
+parameter $$\eta \in \mathbb{R}^m$$, and a differentiable and surjective
+function $$f(\eta) = \theta$$ that maps
+from values in $$\mathbb{R}^m$$ to $$C$$, $$f: \mathbb{R}^m \rightarrow C$$.
+Then, we do optimization on $$\eta$$ instead
+of $$\theta$$, as follows:
+
+$$\eta \leftarrow \eta - \alpha \nabla_{\eta} L\left(f(\eta)\right)$$
+
+We use the same loss function as before, but
+now composed with the function $$f$$ so it is a
+function of $$\eta$$. And we now take the gradient with
+respect to $$\eta$$. Because $$\eta$$ is unconstrained, we can
+update it with gradient descent, taking advantage of the
+highly efficient routines implemented for unconstrained
+optimization in Pytorch. The parameter
+of interest $$\theta$$ is given by $$f(\eta)$$ and it will
+always satisfy the constraint.
+
+For our example of constraining $$\theta$$
+to be on the unit circle, we can parametrize $$\theta$$
+with the function $$f(\eta) = \eta / \| \eta \|$$[^4].
+
+Lets see how we can implement this idea in Pytorch.
+
 Example: Average on a circle, unconstrained
 ---------------------
 
-Let's show a concrete example of a unit-norm constrain
-problem with Pytorch.
+First, introduce a simple problem to illustrate constrained
+optimization: Finding the average of a set of points on the unit circle.
 
-We have some data vectors $$x_i$$ distributed in the unit circle, and
-we want to find the vector $$\theta$$ that minimizes the
-squared distance to the data $$L(\theta) = \sum_i \| \theta - x_i \|^2$$.
-We also want $$\theta$$ to be on the circle.
+For this, we will have some data vectors $$x_i$$ distributed in the
+unit circle, and we want to find the vector $$\theta$$ that
+minimizes the squared distance to the data
+$$L(\theta) = \sum_i \| \theta - x_i \|^2$$. We also want $$\theta$$
+to be on the circle.
 
 Before showing how to solve the
 constrained optimization problem, lets implement the
@@ -196,60 +251,15 @@ plt.show()
 We see that the learned point is not on the circle, as we would
 expect since we did not add any constraint.
 
-Formalism of parametrizations
----------------------
-
-We see that updating the parameter in the direction
-of the negative gradient will usually lead us to
-break the constraint, which in this case is to stay
-in the circle. So, how can we update the
-parameter in such a way that it remains on the circle?
-
-An intuitive alternative is to project $$\theta$$ back
-onto the unit circle by $$\theta \leftarrow \theta / \| \theta \|$$
-after each update. However, doing this naively
-can introduce problems. Also, while projecting onto the circle
-is straightforward, projecting onto other constraint sets might be more
-difficult. Parametrizations provide us with a more general approach.
-
-Parametrizations also involve projecting onto the set
-$$C$$, but in a more principled way. The idea is to
-introduce a new unconstrained parameter $$\eta \in \mathbb{R}^m$$,
-and a differentiable function $$f(\eta) = \theta$$ that maps
-from values in $$\mathbb{R}^m$$ to $$C$$, $$f: \mathbb{R}^m \rightarrow C$$.
-Then, we do optimization on $$\eta$$ instead
-of $$\theta$$, as follows:
-
-$$\eta \leftarrow \eta - \alpha \nabla_{\eta} L\left(f(\eta)\right)$$
-
-We use the same loss function as before, but
-now composed with the function $$f$$ so it is a
-function of $$\eta$$. We now take the gradient with respect to
-$$\eta$$. Because $$\eta$$ is unconstrained, we can update it
-with gradient descent without worrying. The parameter of
-interest $$\theta$$ is given by $$f(\eta)$$ and it will
-always satisfy the constraint.
-
-For our example of constraining $$\theta$$
-to be on the unit circle, we can parametrize $$\theta$$
-with the function $$f(\eta) = \eta / \| \eta \|$$[^4].
-Lets see how we can implement this idea in Pytorch.
 
 Implementation of unit circle constrain in Pytorch
 ---------------------
 
-We will implement the parametrization using the Pytorch
-tool `torch.nn.utils.parametrize`. We do this because
-if we wanted to manually implement the parametrization
-(which we could), we would have to take care of several
-considerations, such as actually implementing a
-parameter $$\eta$$ in our model, making sure that $$\theta$$
-is always up to date, and more.
-
-The Pytorch tool `torch.nn.utils.parametrize` does all of
-this work for us. We just need to implement the
-function $$f$$ in a specific way so that `parametrize` can
-use it, as described next.
+We now implement a model that does constrained optimization
+using parametrizations. For this, we will use the Pytorch
+tool `torch.nn.utils.parametrize`, which takes care
+of a lot of the software bookkeeping for us, and can be
+implemented with minimal changes to our original code.
 
 **How to implement $$f$$ for Pytorch parametrizations**
 

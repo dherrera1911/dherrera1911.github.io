@@ -23,11 +23,14 @@ One issue with estimating the true covariance matrix
 $$\Sigma$$ for a given population or random variable is that,
 if $$p$$ is the number of dimensions, $$\Sigma$$ has
 $$p \times p$$ entries, of which $$(p+1)p/2$$
-are independent parameters need to be estimated (because
-of the matrix symmetry[^1]). This means that the number of parameters
+are independent parameters that need to be estimated (this number comes
+from considering the symmetry of covariance matrices[^1]).
+This means that the number of parameters
 needed to estimate the covariance matrix grows fast with the
 number of dimensions. That is, covariance estimation suffers
-from the curse of dimensionality. An interesting and challenging statistical
+from the curse of dimensionality.
+
+An interesting and challenging statistical
 problem is how to estimate a covariance matrix when the number of
 observations $$n$$ is not large compared to the number of dimensions $$p$$.
 

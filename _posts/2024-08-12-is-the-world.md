@@ -9,18 +9,21 @@ tags:
   - General audience
 ---
 
-Author translation of the chapter "Es el mundo como lo vemos?"
-([link to pdf](/files/teaching/hym/capitulo_hym_dh.pdf) in Spanish)
-for the book
-["Hitos y Mitos del Cerebro"](https://pmb.parlamento.gub.uy/pmb/opac_css/index.php?lvl=notice_display&id=102927), edited
-for the homonymous first year course at
-Universidad de la República, Uruguay. The chapter aims
-to introduce several ideas of perception and neuroscience to
-first year students through the guiding question of whether the
-world is as we see it. In particular, the chapter discusses
-the question from three perspectives: an evolutionary perspective,
-a resource optimization perspective, and the perspective of
-ambiguity of sensory information.
+In this blogpost, we ask a question ancient as philosophy itself:
+is the world as we see it? However we approach this question
+from the view of biology and neuroscience. We discuss three
+different perspectives on why the world is or is not as we see it:
+An evolutionary perspective, a resource optimization perspective, and
+the perspective of ambiguity of sensory information.
+With this question as guiding thread, this post introduces several
+major concepts of perception and neuroscience to a general audience.
+
+This blogpost is a translation of a chapter I wrote for the book
+["Hitos y Mitos del Cerebro"](https://pmb.parlamento.gub.uy/pmb/opac_css/index.php?lvl=notice_display&id=102927),
+which is used in the homonymous first year undergraduate course at
+Universidad de la República, Uruguay. For the pdf of the
+original article in Spanish, 
+[click here](/files/teaching/hym/capitulo_hym_dh.pdf).
 
 Introduction
 ------
