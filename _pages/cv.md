@@ -49,7 +49,7 @@ Skills
   * Data analysis in manifolds
   * Linear algebra
 * Communication:
-  * Besides scientific articles, I have experience writing blogs and science communication pieces
+  * Besides scientific articles, I have experience writing blogs, science communication pieces, and teaching materials
   * I have been interviewed about science for newspapers, radio and TV
   * I many years of teaching and mentoring experience
 * Experimental techniques:
