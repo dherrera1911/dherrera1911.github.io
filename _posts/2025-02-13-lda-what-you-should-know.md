@@ -376,8 +376,8 @@ it is easy to overlook this fact.
 This can be shown with a simple example, similar to the ones
 typically used to illustrate how LDA-DR works. In this example
 we have 4 classes in a 2D space. Along the x axis, we have
-that the classes are separate into two pairs that have
-almost complete overlap, but that the two pairs are very
+that the classes are separated into two pairs, where the classes in
+each pair have almost complete overlap, but the two pairs are very
 far apart. Along the y axis, we have that all the classes
 are equally spaced, with good separation, but the distance between
 the classes is smaller. All classes have spherical within-class
