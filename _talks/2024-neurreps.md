@@ -13,5 +13,5 @@ low-dimensional feature space that maximizes the separation
 between classes. We propose a novel supervised dimensionality
 reduction method, Supervised Quadratic Feature Analysis (SQFA),
 that exploits the geometry of the data second-order statistics to
-maximize second-order class separation. [Poster](files/presentations/neurreps_2024_poster.pdf). 
+maximize second-order class separation. [Poster](/files/presentations/neurreps_2024_poster.pdf). 
 
