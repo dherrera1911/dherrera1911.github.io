@@ -1,7 +1,7 @@
 ---
 title: "Layperson's Guide to the Science Reproducibility Crisis"
 date: 2025-02-13
-permalink: /posts/2025/01/lda-what-you-should-know/
+permalink: /posts/2025/03/reproducibility-crisis-for-layperson/
 tags:
   - Science
   - Meta-science
