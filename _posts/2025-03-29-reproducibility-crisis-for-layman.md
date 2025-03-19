@@ -9,11 +9,7 @@ tags:
   - Science Communication
 ---
 
-Science is largely responsible for the tremendous progress civilization has made over the last few centuries. It has also shaped how we see ourselves and our place in the universe.
-However, like any other human endeavor, science is not perfect. Recent
-years have seen a growing debate about the so-called "reproducibility crisis,"
-which refers to the inability to reproduce the results of many scientific studies.
-This is a serious issue that affects not only the scientific community but
+Science is largely responsible for the tremendous progress civilization has made over the last few centuries. It has also shaped how we see ourselves and our place in the universe. However, like any other human endeavor, science is not perfect. Recent years have seen a growing debate about the so-called "reproducibility crisis," which refers to the inability to reproduce the results of many scientific studies. This is a serious issue that affects not only the scientific community but
 also society as a whole. In this post, I provide an accessible overview of the
 issue.
 
