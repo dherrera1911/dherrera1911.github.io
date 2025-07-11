@@ -39,19 +39,17 @@ Skills
 ======
 
 * Software:
-  * Programming languages that I am proficient in: Python (Pytorch), Matlab, R, Stan
-  * Version control and continuous integration: Git, GitHub, GitHub Actions
+  * I am proficient in Python, PyTorch), Matlab, R, Stan
   * Python package development and publishing
-* Data analysis:
+* Data analysis and statistics:
   * Bayesian statistics
   * Hierarchical regression models
   * Image and signal processing
-  * Data analysis in manifolds
-  * Linear algebra
+  * Linear algebra and applied math
 * Communication:
-  * Besides scientific articles, I have experience writing blogs, science communication pieces, and teaching materials
+  * I have experience writing blogs, science communication pieces, and teaching materials
   * I have been interviewed about science for newspapers, radio and TV
-  * I many years of teaching and mentoring experience
+  * I have 9 years of teaching and mentoring experience
 * Experimental techniques:
   * Psychophysics
 
@@ -77,8 +75,8 @@ Software
 Packages I authored:
 
 - [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/)
+- [**`projnormal`**](https://projnormal.readthedocs.io/en/latest/)
 - [**`amatorch`**](https://amatorch.readthedocs.io/en/latest/)
-- [**`projected_normal_distribution`**](https://github.com/dherrera1911/projected_normal_distribution)
 
 Packages I contributed to:
  
