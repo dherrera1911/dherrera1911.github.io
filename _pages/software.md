@@ -6,18 +6,22 @@ redirect_from:
   - /software.html
 ---
 
-## Packages I develop
+## Packages I developed
 
-I am currently developing different PyTorch-based packages for statistical analyses.
+I have developed Python packages implementing some of my work on statistical models
+and algorithms. These packages use a PyTorch backend, they are well
+documented, and use best practices for software development such as
+testing and continuous integration.
 
-- [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/): A Python package for learning linear features
-that maximize second-order differences between classes, using information geometry.
-- [**`amatorch`**](https://amatorch.readthedocs.io/en/latest/): A Python package for learning features
-that maximize the performance of a probabilistic decoder. One of it uses is to learn ideal observer
+- [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/): A Python package for learning
+linear features that maximize second-order differences between classes,
+using information geometry.
+- [**`projnormal`**](https://projnormal.readthedocs.io/en/latest/):
+A Python package for working with the projected normal distribution in the
+N-dimensional sphere.
+- [**`amatorch`**](https://amatorch.readthedocs.io/en/latest/): A Python package for learning features that maximize the performance of a probabilistic decoder.
+One of it uses is to learn ideal observer
 models to compare to human perception and visual neurophysiology.
-- [**`projected_normal_distribution`**](https://github.com/dherrera1911/projected_normal_distribution): A
-Python package implementing several operations for the projected normal distribution, a distribution
-defined on the unit N-dimensional sphere.
 
 ## Packages I contribute to
 
