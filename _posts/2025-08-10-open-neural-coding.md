@@ -142,7 +142,7 @@ The variable `my_ses` is an object of type `EcephysSession`,
 which allows us to conveniently access the data
 (see [a tutorial from AllenSDK](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_session.html)).
 
-### Filtering trials by stimulus
+### Filtering trials by stimulus properties
 
 What do we mean by "conveniently access the data"?
 A given experimental session has a lot of data, of which we
@@ -234,7 +234,7 @@ obtain the neural data:
 trial_inds = stim_table.index.values
 ```
 
-### Filtering neurons by brain area
+### Filtering neurons by brain area and firing rate
 
 The Visual Coding - Neuropixels dataset contains
 recordings from many brain areas and neurons. 
