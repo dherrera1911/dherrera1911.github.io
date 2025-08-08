@@ -23,13 +23,13 @@ use a technique called **parametrization**.
 
 Parametrizations are a tool to turn a constrained optimization
 problem into a simpler unconstrained optimization problem.
-In this post we introduce parametrizations for
-non-experts, and show how we can implement them in Pytorch.
+In this post we introduce parametrizations
+and show how to implement them in Pytorch.
 We will study two examples with synthetic data:
 constraining a vector to have unit norm, and
 constraining a matrix to be SPD.
 
-We also assume relatively little background knowledge. 
+We assume familiarity with PyTorch and basic optimization.
 More in depth information on Pytorch parametrizations can be found in the
 [Parametrizations tutorial](https://pytorch.org/tutorials/intermediate/parametrizations.html)
 (aimed at more advanced users).
