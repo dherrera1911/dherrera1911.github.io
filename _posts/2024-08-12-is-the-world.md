@@ -484,7 +484,7 @@ our visual input is two-dimensional (the plane of our retina, like the
 two dimensions of a photograph), while the external world
 has three spatial dimensions. Our visual system is very good at making
 (subconscious) interpretations of visual stimuli, making it difficult for us
-how they can be ambiguous, but nonetheless these necessary
+to see how they can be ambiguous, but nonetheless these necessary
 interpretations occur at various stages of visual processing.
 
 <figure>
