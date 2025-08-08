@@ -8,14 +8,14 @@ tags:
   - Project management
 ---
 
-If you are a scientist who uses code in your research, you might
-have experienced the following scenario. You wrote some code, let's
-say in directory `my_code/`, or GitHub repository
+If you are a scientist programming for your research, you probably
+experienced the following. You wrote some code,
+in a directory `my_code/`, or GitHub repository
 `https://github.com/my_user/my_code`. You use this code in a
-certain project and analyses are currently working. Then, you
-have the idea of modifying `my_code`, for example, to add a new
-feature required by a new project. However, the new modified code
-might (and probably will) break the old project.
+project, and analyses are working. Then, you
+modify your software to add a new feature, required by a new
+project or analysis. However, the new modified code
+might (and probably will) break the original analysis.
 
 Of course, you don't want your old project to now become
 unreplicable because of these changes. But you also
