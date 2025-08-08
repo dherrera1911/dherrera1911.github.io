@@ -9,59 +9,65 @@ tags:
   - Neural Coding
 ---
 
-Systems neuroscience aims to understand how information is encoded in populations of neurons.
-In modern experiments, this often involves recording large and complex datasets.
-There is a growing need for novel statistical methods
+Understanding how populations of neurons encode information is a
+central goal of systems neuroscience.
+As neural recordings scale in magnitude, 
+there is a growing need for novel statistical methods
 to analyze these data.
 Open neuroscience datasets are a great tool for developing and testing
-such methods. This post series provides quick tutorials on how to access and
-use some open datasets for neural population coding using Python.
-Specifically, we'll obtain neural population spike counts 
-across experimental conditions and trials. This first tutorial
-looks at the [Allen Institute - Visual Coding](https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels)
-dataset.
+such methods. This post kicks off a short series on
+working with some open neural population datasets using Python.
+We'll focus on one core task: **obtaining spike counts across trials and conditions**.
+This first post uses the
+[Allen Institute - Visual Coding](https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels)
+dataset, accessed via the AllenSDK package.
+
+We'll:
+
+* Explore the dataset using AllenSDK
+* Download data for one session
+* Filter the data by stimulus presented and neuron properties
+* Extract a spike count matrix and condition labels
+* Visualize and decode conditions using LDA
+
+We'll also run a quick supervised dimensionality reduction
+and decoding pipeline using Linear Discriminant Analysis (LDA).
 
 ## Motivation
 
-There are many open datasets, data formats, and processing tools
+There are many open datasets and data tools
 for systems neuroscience.
-While this diversity is valuable, it can also be overwhelming--especially
-when you're trying to find a dataset that fits your needs or make
-sense of complex documentation.
+While valuable, it can also be overwhelming to navigate the
+options and their complex documentations.
 
-This post aims to provide minimal code to obtain
-one specific type of neural population data:
-**spike counts across trials and conditions**.
-Other types of
-data that we are not covering here include temporal data
-(spike trains) and data without trials (e.g., spontaneous
-activity, free behavior, etc.).
+This post aims to provide an example of relatively simple
+code to achieve a specific task:
+**obtain spike counts across trials and conditions**.
+Our end goal is to obtain:
+* A matrix `X` of shape `(trials, neurons)` with spike counts
+* A vector `y` of length `trials` with condition labels
 
-The data format that we aim for is an array $$X$$ of shape
-$$(t, n)$$, where $$t$$ is the number of trials and $$n$$ is the number
-of neurons, and a vector $$y$$ of length $$t$$, indicating
-the experimental condition for each trial. Each entry in
-$$X$$ contains the number of spikes of a neuron in a trial.
-We will also show
-a very simple analysis on the datasets, applying LDA
-for decoding and visualization.
+This post will not explain the details of standard
+Python packages such as `pandas`, nor the intricacies of
+the AllenSDK package or the
+[Neurodata Without Borders](https://nwb.org/) (NWB) format.
+Instead, it will focus on the steps to obtain the spike counts
+and condition labels.
 
 
 ## Allen Institute - Brain Observatory
 
-The Allen Institute provides many open datasets. One that fits our
-goal is [Visual Coding - Neuropixels](https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels).
-This dataset contains recordings from the mouse brain
+We'll use the Allen Institute 
+[Visual Coding - Neuropixels](https://portal.brain-map.org/circuits-behavior/visual-coding-neuropixels)
+dataset. This dataset
+contains high-density recordings from the mouse brain
 during visual stimulation experiments, using the Neuropixels probe
 (one of the latest technologies for large neural recordings).
 
-As can be seen in the [dataset documentation](https://allensdk.readthedocs.io/en/latest/visual_coding_neuropixels.html),
-the data is available as
-[Neurodata Without Borders](https://nwb.org/) (NWB) files, which
-are a standard format for storing neural data (we'll see more about NWB
-below). However, there is also a Python package called
-[AllenSDK](https://allensdk.readthedocs.io/en/latest/) that
-provides a convenient interface for the data. 
+This is a large dataset with many sessions and 855 GB of
+NWB files. To interface conveniently with the data, we will use
+the Python package [AllenSDK](https://allensdk.readthedocs.io/en/latest/visual_coding_neuropixels.html),
+developed by the Allen Institute.
 
 First, let's install the package using `pip` in the
 command line (we recommend using a virtual environment):
@@ -72,14 +78,13 @@ pip install allensdk
 
 Next, we use the package to access the dataset.
 
-### The AllenSDK cache and downloading single session data
+## The AllenSDK cache and downloading single session data
 
-Importantly, the full dataset is very large (855 GB), so
-`allensdk` provides a convenient way to download only the data
-that we need (e.g. only one of the 58 sessions). The
-tool for this is an object called `EcephysProjectCache`,
-which we can use to manage and download the dataset. 
+The `allensdk` package provides a cache system to manage the
+data. For example, it allows us to obtain the metadata for
+the sessions before downloading them.
 
+The tool for this is an object called `EcephysProjectCache`.
 Let's create the cache object and use it to download the
 metadata for the sessions:
 
@@ -138,29 +143,27 @@ ind = sessions.index.values[21]  # Get the session ID
 my_ses = cache.get_session_data(ind)  # Download the data for that session
 ```
 
-The variable `my_ses` is an object of type `EcephysSession`,
-which allows us to conveniently access the data
-(see [a tutorial from AllenSDK](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_session.html)).
+The object `my_ses` of the class `EcephysSession`,
+and it allows us to conveniently access the data, as shown
+below (see also [this tutorial from AllenSDK](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_session.html)).
 
-### Filtering trials by stimulus properties
+## Filtering trials by stimulus properties
 
-What do we mean by "conveniently access the data"?
-A given experimental session has a lot of data, of which we
-might only want a small part. For example, many different
-types of stimuli are presented in a given session, like
+Each session contains many types of stimuli, like
 static gratings, gabors, natural images and natural movies,
-as shown in the diagram below (obtained from the Allen Brain
-Observatory [cheat sheet](https://brainmapportal-live-4cc80a57cd6e400d854-f7fdcae.divio-media.net/filer_public/0f/5d/0f5d22c9-f8f6-428c-9f7a-2983631e72b4/neuropixels_cheat_sheet_nov_2019.pdf)).
+as shown in the diagram below (obtained from
+[this cheat sheet](https://brainmapportal-live-4cc80a57cd6e400d854-f7fdcae.divio-media.net/filer_public/0f/5d/0f5d22c9-f8f6-428c-9f7a-2983631e72b4/neuropixels_cheat_sheet_nov_2019.pdf)).
 
 ![](/files/blog/neural_data/allen_drawing.png)
 
+Here, we'll focus on responses to **static gratings**, which vary in:
+* Orientation (0, 30, 60, 90, 120, and 150 degrees)
+* Spatial frequency (0.02, 0.04, 0.08, 0.16 and 0.32 cycles/degree)
+* Phase (0, 0.25, 0.5 and 0.75)
 
-In this tutorial, we'll focus on responses to static gratings--these
-come in 6 orientations, 5 spatial frequencies, and 4 phases,
-totaling 120 unique conditions.
-For this, we use the attribute `my_ses.stimulus_presentations`, which has a
-Pandas DataFrame with the stimulus information for each trial.
-Let's visualize the first few rows of this DataFrame:
+To select the trials with static gratings, we use
+the stimulus information table (a Pandas DataFrame), available as
+`my_ses.stimulus_presentations`, which we assign to the variable `stim_table`:
 
 ```python
 stim_table = my_ses.stimulus_presentations
@@ -186,12 +189,10 @@ Column names: Index(['stimulus_block', 'start_time', 'stop_time', 'temporal_freq
       dtype='object')
 ```
 
-To extract the neural data for the trials that we want, we
-can use the trial index in `stim_table` (the value under the header
-`stimulus_presentation_id`). For that, let's filter `stim_table` to
-only have the trials with the static gratings stimulus using
-`stimulus_name`.
-We also exclude trials with a null stimulus (i.e., where no stimulus was presented).
+To obtain the desired trials, we need to extract their trial
+index from `stim_table`. For that, let's use
+Pandas to filter the DataFrame by `stimulus_name`, and also
+exclude trials with a null stimulus (i.e., where no stimulus was presented).
 
 ```python
 print(f"Number of trials before filtering: {len(stim_table)}")
@@ -210,8 +211,8 @@ Number of trials after filtering: 5811
 
 Let's further simplify our dataset by keeping only
 one spatial frequency (0.08 cycles/degree) and
-one phase (0 degrees).
-
+one phase (0 degrees). (This is an arbitrary choice,
+you might want to keep more conditions for your analyses.)
 
 ```python
 stim_table = stim_table[
@@ -234,18 +235,18 @@ obtain the neural data:
 trial_inds = stim_table.index.values
 ```
 
-### Filtering neurons by brain area and firing rate
+## Filtering neurons by brain area and firing rate
 
-The Visual Coding - Neuropixels dataset contains
-recordings from many brain areas and neurons. 
-For a given analyses, we might want to focus on neurons from
-a specific brain area, that satisfy some quality metrics.
+Also, each session contains hundreds of neurons recorder across
+many brain areas. Since we are interested in visual coding, let's
+just keep the neurons from the primary visual cortex ("VISp").
+We'll also focus on neurons with a firing rate above a certain threshold.
 (See this [quality metrics tutorial](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_quality_metrics.html)
 from AllenSDK).
 
-Like we did with stimulus presentations, we can use the
-session object to filter the neurons that we want. We
-start by obtaining the table with the neuron information:
+Like for the stimulus information, the neurons information is
+available as a Pandas DataFrame in `my_ses.units`. We assign
+this DataFrame to the variable `units_table` for convenience.
 
 ```python
 units_table = my_ses.units
@@ -314,7 +315,7 @@ Number of neurons in V1 with firing rate > 3.0: 45
 ```
 
 
-### Obtaining the spike counts
+## Obtaining the spike counts
 
 We have the IDs of the trials and neurons that we want.
 The next step is to pass them to the method
@@ -350,11 +351,11 @@ Shape of spike counts array: (1163, 45)
 The variable `X` now contains the spike counts for
 our 45 neurons across the 1163 selected trials.
 
-Given that we only kept one spatial frequency and
-phase, the experimental condition for each trial
-is determined by the orientation. We can extract
-the orientations from `stim_table` and convert them
-to integer labels:
+Now we should obtain the labels for each trial.
+Since we fixed the spatial frequency and phase,
+we'll use the orientations that we can extract
+from `stim_table`, and convert them to integer labels
+using `np.unique()`:
 
 ```python
 ori = stim_table.orientation.values
@@ -374,7 +375,7 @@ Now the labels are in `y`, which has the same length
 as the number of trials in `X`.
 
 
-### Simple decoding and visualization analysis
+## Simple decoding and visualization analysis
 
 Let's apply a simple analysis to our data
 using Linear Discriminant Analysis (LDA).
