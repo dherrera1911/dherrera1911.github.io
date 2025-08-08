@@ -263,7 +263,7 @@ implemented with minimal changes to our original code.
 
 **How to implement $$f$$ for Pytorch parametrizations**
 
-To use ``parametrize``, we need to define the function $f$
+To use ``parametrize``, we need to define the function $$f$$
 inside an `nn.Module` class, implemented in the method 
 ``forward`` inside this class. Let's
 see how this looks like in our example:
