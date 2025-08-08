@@ -1,5 +1,5 @@
 ---
-title: 'Open Neural Coding Datasets: Python Tutorial, Part 1'
+title: 'Neural Coding Open Datasets: Python Tutorial Part 1'
 date: 2025-08-10
 permalink: /posts/2025/08/open-neural-coding-datasets/
 tags:
