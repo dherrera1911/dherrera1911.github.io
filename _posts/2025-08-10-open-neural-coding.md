@@ -138,7 +138,7 @@ ind = sessions.index.values[21]  # Get the session ID
 my_ses = cache.get_session_data(ind)  # Download the data for that session
 ```
 
-Now the variable `my_ses` is an object of type `EcephysSession`,
+The variable `my_ses` is an object of type `EcephysSession`,
 which allows us to conveniently access the data
 (see [a tutorial from AllenSDK](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_session.html)).
 
