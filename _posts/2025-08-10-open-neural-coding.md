@@ -237,9 +237,9 @@ trial_inds = stim_table.index.values
 ### Filtering neurons by brain area
 
 The Visual Coding - Neuropixels dataset contains
-recordings from many brain areas and neurons. For neural
-coding analyses, we might want to focus on a specific brain
-area, or on neurons that satisfy some quality metrics.
+recordings from many brain areas and neurons. 
+For a given analyses, we might want to focus on neurons from
+a specific brain area, that satisfy some quality metrics.
 (See this [quality metrics tutorial](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_quality_metrics.html)
 from AllenSDK).
 
@@ -281,6 +281,19 @@ Column names: Index(['waveform_PT_ratio', 'waveform_amplitude', 'amplitude_cutof
        'probe_lfp_sampling_rate', 'probe_has_lfp_data'],
       dtype='object')
 Number of neurons: 501
+```
+
+Let's see what brain areas are present in the dataset.
+
+```python
+print("Brain areas in the dataset:")
+print(units_table.ecephys_structure_acronym.unique())
+```
+
+```
+Brain areas in the dataset:
+['DG' 'CA1' 'VISam' 'LP' 'VISpm' 'LGd' 'VISp' 'CA3' 'CA2' 'VISl' 'MB' 'TH'
+ 'PP' 'PIL' 'VISal']
 ```
 
 Let's get the indices of only the units in the primary visual
