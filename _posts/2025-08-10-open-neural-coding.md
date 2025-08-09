@@ -143,7 +143,7 @@ ind = sessions.index.values[21]  # Get the session ID
 my_ses = cache.get_session_data(ind)  # Download the data for that session
 ```
 
-The object `my_ses` of the class `EcephysSession`,
+The object `my_ses` is of the class `EcephysSession`,
 and it allows us to conveniently access the data, as shown
 below (see also [this tutorial from AllenSDK](https://allensdk.readthedocs.io/en/latest/_static/examples/nb/ecephys_session.html)).
 
@@ -159,7 +159,7 @@ as shown in the diagram below (obtained from
 Here, we'll focus on responses to **static gratings**, which vary in:
 * Orientation (0, 30, 60, 90, 120, and 150 degrees)
 * Spatial frequency (0.02, 0.04, 0.08, 0.16 and 0.32 cycles/degree)
-* Phase (0, 0.25, 0.5 and 0.75)
+* Phase (0, 0.25, 0.5 and 0.75 periods)
 
 To select the trials with static gratings, we use
 the stimulus information table (a Pandas DataFrame), available as
@@ -237,7 +237,7 @@ trial_inds = stim_table.index.values
 
 ## Filtering neurons by brain area and firing rate
 
-Also, each session contains hundreds of neurons recorder across
+Also, each session contains hundreds of neurons recorded across
 many brain areas. Since we are interested in visual coding, let's
 just keep the neurons from the primary visual cortex ("VISp").
 We'll also focus on neurons with a firing rate above a certain threshold.
@@ -297,7 +297,7 @@ Brain areas in the dataset:
  'PP' 'PIL' 'VISal']
 ```
 
-Let's get the indices of only the units in the primary visual
+Let's get the indices of the units that are in the primary visual
 cortex (VISp), and that have a firing rate above 3 Hz.
 
 ```python
