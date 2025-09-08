@@ -9,49 +9,49 @@ redirect_from:
 
 {% include base_path %}
 
+[Click here to download my CV as a PDF file.](/files/Daniel_Herrera_CV.pdf)
 
 Education
 ======
-* Ph.D in Cognitive Neuroscience, Universidad de la República (*UdelaR*), Uruguay, 2021
-* B.S. in Biochemistry, Universidad de la República, Uruguay, 2015 (Summa Cum Laude)
+* **Ph.D in Computational Neuroscience**, Universidad de la República (UdelaR), Uruguay, 2021
+* **B.S. in Biochemistry**, Universidad de la República, Uruguay, 2015 (Summa Cum Laude)
 
 
 Academic positions
 ======
 
-* **2022-present**: Postdoctoral Researcher, [Burge Lab](https://jburge.psych.upenn.edu/), University of Pennsylvania
+* **2022-Ongoing: Postdoctoral Researcher**, [Burge Lab](https://jburge.psych.upenn.edu/), University of Pennsylvania
 
-* **2017-2022**: Research/Teaching Assistant, Laboratory of Neuroscience,
+* **2017-2022: Research & Teaching Associate**, Laboratory of Neuroscience,
   Faculty of Sciences, UdelaR
 
-* **2021-2022**: Research/Teaching Assistant, [Interdisciplinary Center for
+* **2021-2022: Research & Teaching Associate**, [Interdisciplinary Center for
     Data Science and Machine Learning (CICADA)](https://cicada.uy/), UdelaR
 
-* **2013-2017**: Research/Teaching Assistant (Grado 1), [Biochemistry Department](http://www.bioquimica.fmed.edu.uy/), Faculty of Medicine, UdelaR
-
-<span style="font-size: smaller;">Note: In Uruguay, Teaching Assistant positions
-are paid University positions, independent of graduate studies. These positions are
-limited in number and attained through very competitive exams. They range from
-late-undergraduate to postdoctoral-level responsibilities.</span>  
-  
+* **2013-2017: Research & Teaching Assistant**, [Biochemistry Department](http://www.bioquimica.fmed.edu.uy/), Faculty of Medicine, UdelaR
 
 Skills
 ======
 
-* Software:
-  * I am proficient in Python, PyTorch), Matlab, R, Stan
-  * Python package development and publishing
-* Data analysis and statistics:
-  * Bayesian statistics
+**Software:**
+  * Languages: Python, PyTorch, Matlab, R, Stan
+  * Tools: Git, GitHub, Continuous Integration (CI), Linux, Python software packaging
+
+**Statistics and Machine Learning:**
+  * Multivariate statistics
   * Hierarchical regression models
+  * Bayesian statistics
+  * Dimensionality reduction
   * Image and signal processing
-  * Linear algebra and applied math
-* Communication:
-  * I have experience writing blogs, science communication pieces, and teaching materials
-  * I have been interviewed about science for newspapers, radio and TV
-  * I have 9 years of teaching and mentoring experience
-* Experimental techniques:
+  * Linear algebra and differential geometry
+
+* Neuroscience:
   * Psychophysics
+  * Visual perception
+  * Computational neuroscience
+  * Neural data analysis
+  * Natural image statistics
+  * Neurobiology and biophysics
 
 Publications
 ======
@@ -62,26 +62,33 @@ Publications
   {% endfor %}</ul>
   
 
-Talks
+Software
+======
+
+I am interested in open-source scientific software development. I try to make my methodological
+work available as well-documented, well-tested and easy-to-use Python packages, so that
+other researchers can use them in their own work. I also contribute to other open-source packages
+in the scientific Python ecosystem.
+
+Packages I authored:
+
+- [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/): Package implementing my method Supervised Quadratic Feature Analysis (SQFA),
+which uses information geometry to do supervised dimensionality reduction
+- [**`projnormal`**](https://projnormal.readthedocs.io/en/latest/): Package implementing my generalizations of the Projected Normal distribution.
+
+Packages I contributed to:
+ 
+- [**`geomstats`**](https://geomstats.github.io/): Package for statistics in Riemannian manifolds, developed
+at UC Santa Barbara. I improved the computation of distances in the manifold of positive definite matrices.
+- [**`plenoptic`**](https://plenoptic.readthedocs.io/en/latest/): Package for model-based image synthesis,
+developed at the Flatiron Institute, NYC. I improved the characterization of texture statistics, and
+added regularized image synthesis.
+
+Presentations
 ======
   <ul>{% for post in site.talks reversed %}
     {% include archive-single-talk-cv.html  %}
   {% endfor %}</ul>
-
-
-Software
-======
-
-Packages I authored:
-
-- [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/)
-- [**`projnormal`**](https://projnormal.readthedocs.io/en/latest/)
-- [**`amatorch`**](https://amatorch.readthedocs.io/en/latest/)
-
-Packages I contributed to:
- 
-- [**`geomstats`**](https://geomstats.github.io/)
-- [**`plenoptic`**](https://plenoptic.readthedocs.io/en/latest/)
 
 
 Technical reports
@@ -114,10 +121,10 @@ Teaching
 ======
 
   I have held teaching positions at Universidad de la República uninterruptedly
-  from 2013 to 2022. I have taught courses or lectures in Biochemistry,
-  Neuroscience, and Machine Learning, and mentored groups of undergraduate
-  students in year-long research projects. A list of my teaching activities
-  (click the link to expand and see teaching materials):
+  from 2013 to 2022. I have taught in Biochemistry,
+  Neuroscience, and Machine Learning, at both undergraduate and graduate levels.
+  I have also mentored year-long student projects .
+  A list of my teaching activities (click the link to expand and see teaching materials):
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
   {% endfor %}</ul>
