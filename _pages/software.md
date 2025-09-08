@@ -19,9 +19,6 @@ using information geometry.
 - [**`projnormal`**](https://projnormal.readthedocs.io/en/latest/):
 A Python package for working with the projected normal distribution in the
 N-dimensional sphere.
-- [**`amatorch`**](https://amatorch.readthedocs.io/en/latest/): A Python package for learning features that maximize the performance of a probabilistic decoder.
-One of it uses is to learn ideal observer
-models to compare to human perception and visual neurophysiology.
 
 ## Packages I contribute to
 
