@@ -13,8 +13,8 @@ redirect_from:
 
 Education
 ======
-* **Ph.D in Computational Neuroscience**, Universidad de la República (UdelaR), Uruguay, 2021
-* **B.S. in Biochemistry**, Universidad de la República, Uruguay, 2015 (Summa Cum Laude)
+* **2021: Ph.D in Computational Neuroscience**, Universidad de la República (UdelaR), Uruguay
+* **2015: B.S. in Biochemistry**, Universidad de la República, Uruguay (Summa Cum Laude)
 
 
 Academic positions
@@ -26,7 +26,7 @@ Academic positions
   Faculty of Sciences, UdelaR
 
 * **2021-2022: Research & Teaching Associate**, [Interdisciplinary Center for
-    Data Science and Machine Learning (CICADA)](https://cicada.uy/), UdelaR
+    Data Science and Machine Learning](https://cicada.uy/), UdelaR
 
 * **2013-2017: Research & Teaching Assistant**, [Biochemistry Department](http://www.bioquimica.fmed.edu.uy/), Faculty of Medicine, UdelaR
 
@@ -45,7 +45,7 @@ Skills
   * Image and signal processing
   * Linear algebra and differential geometry
 
-* Neuroscience:
+**Neuroscience:**
   * Psychophysics
   * Visual perception
   * Computational neuroscience
@@ -66,23 +66,27 @@ Software
 ======
 
 I am interested in open-source scientific software development. I try to make my methodological
-work available as well-documented, well-tested and easy-to-use Python packages, so that
-other researchers can use them in their own work. I also contribute to other open-source packages
+work available as well-documented, tested, and easy-to-use Python packages, that
+other people can use. I also contribute to other open-source packages
 in the scientific Python ecosystem.
 
-Packages I authored:
+**Packages I authored:**
 
 - [**`sqfa`**](https://sqfa.readthedocs.io/en/latest/): Package implementing my method Supervised Quadratic Feature Analysis (SQFA),
 which uses information geometry to do supervised dimensionality reduction
 - [**`projnormal`**](https://projnormal.readthedocs.io/en/latest/): Package implementing my generalizations of the Projected Normal distribution.
 
-Packages I contributed to:
+**Packages I contributed to:**
  
 - [**`geomstats`**](https://geomstats.github.io/): Package for statistics in Riemannian manifolds, developed
 at UC Santa Barbara. I improved the computation of distances in the manifold of positive definite matrices.
 - [**`plenoptic`**](https://plenoptic.readthedocs.io/en/latest/): Package for model-based image synthesis,
 developed at the Flatiron Institute, NYC. I improved the characterization of texture statistics, and
 added regularized image synthesis.
+* [**`scikit-learn`**](https://scikit-learn.org/stable/): (Pending merge) Main library for
+classical machine learning in Python. I submitted an enhancement of Quadratic Discriminant Analysis
+to support use of robust and shrinkage covariance estimators. I also submitted a missing
+correction to the Minimum Covariance Determinant estimator, fixing a bias in the output.
 
 Presentations
 ======
@@ -93,13 +97,11 @@ Presentations
 
 Technical reports
 ======
-During the COVID-19 pandemic, I participated in UdelaR's
-honorary group for COVID-19 data analysis, [GUIAD-COVID-19](https://guiad-covid.github.io/).
-There I authored technical reports to serve decision makers in Uruguay.
-The reports are hosted in UdelaR's institutional repository, and are
-featured in the university's
-[Contributions to the COVID-19 response report](https://udelar.edu.uy/portal/wp-content/uploads/sites/48/2021/03/La-Universidad-de-la-Republica-frente-al-SARS-CoV-2.pdf).
-Some reports I contributed to:
+During COVID-19, I was founding member of a large
+collaboration at UdelaR to work on COVID-19 data analysis,
+called [GUIAD-COVID-19](https://guiad-covid.github.io/).
+There, I authored technical reports to inform the public and decision
+makers, which are are hosted in UdelaR's institutional repository:
 * [Report 2: Subexponential growth of reported cases in Uruguay](https://guiad-covid.github.io/reports/2021-03-26-Reporte-2/)  
 <span style="font-size: smaller;">March 2020</span>  
 <span style="font-size: smaller;">M. Arim; <strong>D. Herrera-Esposito</strong>; J.I. Sanguinetti-Scheck; J. Pintos; A. Alemán; H. Romero; M.I. Fariello; H. Botti</span>
@@ -117,13 +119,17 @@ Some reports I contributed to:
 <span style="font-size: smaller;"> <strong>D. Herrera-Esposito</strong></span>
 
 
+Some of these reports are featured in UdelaR's
+[contributions to the COVID-19 response report](https://udelar.edu.uy/portal/wp-content/uploads/sites/48/2021/03/La-Universidad-de-la-Republica-frente-al-SARS-CoV-2.pdf).
+
+
 Teaching
 ======
 
-  I have held teaching positions at Universidad de la República uninterruptedly
+  I have held teaching positions at Universidad de la República (UdelaR)
   from 2013 to 2022. I have taught in Biochemistry,
   Neuroscience, and Machine Learning, at both undergraduate and graduate levels.
-  I have also mentored year-long student projects .
+  I have also mentored year-long undergraduate student projects.
   A list of my teaching activities (click the link to expand and see teaching materials):
   <ul>{% for post in site.teaching reversed %}
     {% include archive-single-cv.html %}
@@ -142,7 +148,7 @@ Service
   * 2024 edition: [*Extracellular vesicles as stress signals important to brain development and function*](https://neurocienciasfalan.org/networking/budelli/), Tracy L. Bale, University of Colorado
   * 2023 edition: [*Powering the social brain: Mitochondria and metabolism in social behavior*](https://neurocienciasfalan.org/networking/budelli/), Carmen Sandi, EPFL
 * Reviewer for:
-  * Journal of Vision
+  * Journal of Vision (exceptional reviewer distinction [2023](https://jov.arvojournals.org/article.aspx?articleid=2802399) and [2024](https://jov.arvojournals.org/article.aspx?articleid=2810682))
   * Nature Communications
   * Neurons Behavior Data Analysis and Theory (NBDT)
   * Scientific Reports
