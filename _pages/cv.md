@@ -78,15 +78,15 @@ which uses information geometry to do supervised dimensionality reduction
 
 **Packages I contributed to:**
  
+* [**`scikit-learn`**](https://scikit-learn.org/stable/): Main library for
+classical machine learning in Python. I submitted an enhancement of Quadratic Discriminant Analysis
+to support use of robust and shrinkage covariance estimators. I also submitted a missing
+correction to the Minimum Covariance Determinant estimator, fixing a bias in the output.
 - [**`geomstats`**](https://geomstats.github.io/): Package for statistics in Riemannian manifolds, developed
 at UC Santa Barbara. I improved the computation of distances in the manifold of positive definite matrices.
 - [**`plenoptic`**](https://plenoptic.readthedocs.io/en/latest/): Package for model-based image synthesis,
 developed at the Flatiron Institute, NYC. I improved the characterization of texture statistics, and
 added regularized image synthesis.
-* [**`scikit-learn`**](https://scikit-learn.org/stable/): (Pending merge) Main library for
-classical machine learning in Python. I submitted an enhancement of Quadratic Discriminant Analysis
-to support use of robust and shrinkage covariance estimators. I also submitted a missing
-correction to the Minimum Covariance Determinant estimator, fixing a bias in the output.
 
 Presentations
 ======
