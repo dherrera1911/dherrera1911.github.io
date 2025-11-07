@@ -24,7 +24,10 @@ N-dimensional sphere.
 
 I have contributed to the following packages:
 
+- [**`scikit-learn`**](https://scikit-learn.org/stable/): Python package for machine learning.
+I incorporated robust covariance estimation into Quadratic Discriminant Analysis ([#32108](https://github.com/scikit-learn/scikit-learn/pull/32108))
+and fixed a bias in the Minimum Covariance Determinant estimator ([#32117](https://github.com/scikit-learn/scikit-learn/pull/32117)
 - [**`geomstats`**](https://geomstats.github.io/): A Python package for performing computations and
-statistical analyses on manifolds.
+statistical analyses on manifolds. I improved the computation of distances between SPD matrices.
 - [**`plenoptic`**](https://plenoptic.readthedocs.io/en/latest/): A Python package for model-based
-synthesis of perceptual stimuli.
+synthesis of perceptual stimuli. I contributed to refactoring the texture synthesis model.
